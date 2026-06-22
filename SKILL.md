@@ -47,18 +47,18 @@ You have two engine options depending on your layout precision needs.
 ### Option 1: Python Engine (Template-driven)
 Best for strict adherence to corporate slide masters and standard text sizes.
 ```bash
-python3 /mnt/c/Users/Administrator/.gemini/skills/markdown-to-pptx/scripts/md2pptx.py input.md -o output.pptx
+python3 scripts/md2pptx.py input.md -o output.pptx
 ```
 With a custom corporate template:
 ```bash
-python3 /mnt/c/Users/Administrator/.gemini/skills/markdown-to-pptx/scripts/md2pptx.py input.md -t corporate_template.pptx -o output.pptx
+python3 scripts/md2pptx.py input.md -t corporate_template.pptx -o output.pptx
 ```
 *(Requires `python-pptx`)*
 
 ### Option 2: JS Web Engine (Dynamic Font Scaling)
 Best for high-density content where you want the script to calculate and dynamically shrink/grow text boundaries based on the presence of images to prevent overflow.
 ```bash
-node /mnt/c/Users/Administrator/.gemini/skills/markdown-to-pptx/scripts/md2pptx_web.js input.md -o output.pptx -t <theme>
+node scripts/md2pptx_web.js input.md -o output.pptx -t <theme>
 ```
 Where `<theme>` is one of: `all`, `light`, `dark`, `warm`, `aurora`, `forest`, `ocean`.
 *(Requires `pptxgenjs` via Node.js)*
