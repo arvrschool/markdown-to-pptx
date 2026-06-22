@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Presentation Preview: test_out.pptx</title>
+    <style>
+        :root {
+            --bg-color: #f8f9fa;
+            --card-bg: #ffffff;
+            --card-border: #E2E8F0;
+            --title-color: #0F172A;
+            --text-color: #334155;
+            --accent-color: #2563EB;
+            --formula-color: #2563EB;
+            --divider-color: #E2E8F0;
+            --font-family: "Segoe UI", -apple-system, sans-serif;
+        }
+        body.theme-light {
+            --bg-color: #f8f9fa;
+            --card-bg: #ffffff;
+            --card-border: #E2E8F0;
+            --title-color: #0F172A;
+            --text-color: #334155;
+            --accent-color: #2563EB;
+            --formula-color: #2563EB;
+            --divider-color: #E2E8F0;
+            --font-family: "Segoe UI", -apple-system, sans-serif;
+        }
+        body.theme-dark {
+            --bg-color: #0F172A;
+            --card-bg: #1E293B;
+            --card-border: #334155;
+            --title-color: #38BDF8;
+            --text-color: #E2E8F0;
+            --accent-color: #38BDF8;
+            --formula-color: #0ea5e9;
+            --divider-color: #334155;
+            --font-family: "Segoe UI", "Trebuchet MS", -apple-system, sans-serif;
+        }
+        body.theme-warm {
+            --bg-color: #FAF6F0;
+            --card-bg: #FFFDF9;
+            --card-border: #E6DFD3;
+            --title-color: #3F2E2C;
+            --text-color: #4A3E3D;
+            --accent-color: #D97706;
+            --formula-color: #B45309;
+            --divider-color: #E6DFD3;
+            --font-family: "Georgia", serif;
+        }
+        body.theme-aurora {
+            --bg-color: #FAF5FF;
+            --card-bg: #FFFFFF;
+            --card-border: #E9D5FF;
+            --title-color: #7C3AED;
+            --text-color: #4B5563;
+            --accent-color: #D946EF;
+            --formula-color: #C084FC;
+            --divider-color: #E9D5FF;
+            --font-family: "Trebuchet MS", "Arial", sans-serif;
+        }
+        body.theme-forest {
+            --bg-color: #F4F7F5;
+            --card-bg: #FFFFFF;
+            --card-border: #D1DDD4;
+            --title-color: #1C3F24;
+            --text-color: #2F3E32;
+            --accent-color: #10B981;
+            --formula-color: #059669;
+            --divider-color: #D1DDD4;
+            --font-family: "Segoe UI", -apple-system, sans-serif;
+        }
+        body.theme-ocean {
+            --bg-color: #F0F7FF;
+            --card-bg: #FFFFFF;
+            --card-border: #C7D2FE;
+            --title-color: #1E3A8A;
+            --text-color: #374151;
+            --accent-color: #3B82F6;
+            --formula-color: #2563EB;
+            --divider-color: #C7D2FE;
+            --font-family: "Calibri", "Segoe UI", -apple-system, sans-serif;
+        }
+        body.theme-spatial {
+            --bg-color: #060E11;
+            --card-bg: #0E1A1E;
+            --card-border: #163D3F;
+            --title-color: #2DD4BF;
+            --text-color: #D1E2E4;
+            --accent-color: #14B8A6;
+            --formula-color: #2DD4BF;
+            --divider-color: #163D3F;
+            --font-family: "Trebuchet MS", "Segoe UI", -apple-system, sans-serif;
+        }
+        .theme-spatial .title-indicator {
+            display: none !important;
+        }
+        .theme-spatial .slide-title {
+            left: 0.8in !important;
+            width: 11.7in !important;
+            justify-content: center !important;
+            text-align: center !important;
+            font-size: 24pt !important;
+        }
+        .theme-spatial .slide-divider {
+            display: none !important;
+        }
+        .theme-spatial .slide-subtitle {
+            display: flex !important;
+        }
+        
+        body {
+            background-color: #202124;
+            color: #e8eaed;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            margin: 0;
+            padding: 80px 20px 20px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: background-color 0.3s;
+        }
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        .slides-container {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+            width: 13.333in;
+        }
+        .slide-frame {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--font-family);
+            width: 13.333in;
+            height: 7.5in;
+            position: relative;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            border-radius: 4px;
+            overflow: hidden;
+            box-sizing: border-box;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .slide-num {
+            color: #9aa0a6;
+            font-size: 14px;
+            margin-top: 8px;
+            align-self: flex-start;
+        }
+        .slide-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .text-card {
+            background-color: var(--card-bg);
+            border: 1.5px solid var(--card-border);
+            border-top: 4px solid var(--accent-color);
+            border-radius: 6px;
+            position: absolute;
+            left: 0.8in;
+            top: 1.6in;
+            width: 5.2in;
+            height: 4.8in;
+            padding: 0.3in;
+            box-sizing: border-box;
+            overflow: hidden;
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+        .image-card-frame {
+            background-color: var(--card-bg);
+            border: 1.5px solid var(--card-border);
+            border-radius: 6px;
+            position: absolute;
+            box-sizing: border-box;
+            padding: 0.08in;
+            overflow: hidden;
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+        .card-container {
+            display: flex;
+            gap: 0.4in;
+            width: 11.7in;
+            position: absolute;
+            left: 0.8in;
+            top: 1.6in;
+            height: 4.8in;
+        }
+        .premium-card {
+            background-color: var(--card-bg);
+            border: 1.5px solid var(--card-border);
+            border-radius: 8px;
+            flex: 1;
+            padding: 0.25in 0.2in;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            gap: 0.1in;
+            height: 4.8in;
+            overflow: hidden;
+            transition: background-color 0.3s, border-color 0.3s;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+        }
+        .premium-card-title {
+            font-size: 14pt;
+            font-weight: bold;
+            color: var(--title-color);
+            text-align: center;
+            margin: 0;
+            transition: color 0.3s;
+        }
+        .premium-card-body {
+            margin: 0;
+            flex: 1;
+            overflow: hidden;
+        }
+        .centered-card {
+            background-color: var(--card-bg);
+            border: 1.5px solid var(--card-border);
+            border-radius: 8px;
+            position: absolute;
+            left: 1.91in;
+            top: 1.6in;
+            width: 9.5in;
+            height: 4.8in;
+            padding: 0.3in;
+            box-sizing: border-box;
+            overflow: hidden;
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+        
+        /* Floating Toolbar */
+        .toolbar {
+            position: fixed;
+            top: 15px;
+            background: rgba(30, 41, 59, 0.85);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 10px 20px;
+            border-radius: 30px;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            z-index: 1000;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        }
+        .toolbar-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #94A3B8;
+        }
+        .theme-btn {
+            border: none;
+            padding: 6px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 13px;
+            transition: all 0.2s;
+            background: rgba(255, 255, 255, 0.1);
+            color: #E2E8F0;
+        }
+        .theme-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        .theme-btn.active {
+            background: #38BDF8;
+            color: #0F172A;
+            box-shadow: 0 0 10px rgba(56, 189, 248, 0.5);
+        }
+    </style>
+</head>
+<body>
+    <h1>Presentation Preview: test_out.pptx</h1>
+    <div class="slides-container">
+        <div class="slide-item">
+            <div class="slide-frame">
+                <div style="position: absolute; left: 0in; top: 0in; width: 4.0in; height: 7.5in; background-color: var(--accent-color); display: flex; align-items: center; justify-content: center;">
+                    <div style="width: 3.0in; height: 6.5in; border: 1.5px solid rgba(255,255,255,0.4); border-radius: 4px;"></div>
+                </div>
+                <div style="position: absolute; left: 4.8in; top: 2.0in; width: 7.5in; height: 2.2in; display: flex; align-items: flex-end; text-align: left; font-size: 36pt; font-weight: bold; color: var(--title-color); line-height: 1.25;">
+                    Embodied &amp; Spatial AI
+                </div>
+                <div style="position: absolute; left: 4.8in; top: 4.5in; width: 7.5in; height: 2.0in; text-align: left;">
+                    <div style="margin: 0; padding: 0; text-align: left; line-height: 1.5; margin-left: 0px; margin-bottom: 8px; "><span style="font-size: 18pt; color: var(--text-color); ">Spatial Intelligence and Autonomous Action</span></div><div style="margin: 0; padding: 0; text-align: left; line-height: 1.5; margin-left: 0px; margin-bottom: 8px; "><span style="font-size: 18pt; color: var(--text-color); ">Advanced Robotics &amp; World Modeling</span></div>
+                </div>
+            </div>
+            <div class="slide-num">Slide 1</div>
+        </div>
+        <div class="slide-item">
+            <div class="slide-frame">
+                <div style="position: absolute; left: 0.8in; top: 0.15in; width: 6.0in; height: 0.25in; font-size: 9pt; font-weight: bold; color: var(--text-color); opacity: 0.6; display: flex; align-items: center; font-family: var(--font-face);">
+                    SLIDE 01 | EMBODIED & SPATIAL AI
+                </div>
+                <div style="position: absolute; right: 0.8in; top: 0.23in; display: flex; gap: 6px;">
+                    <div style="width: 8px; height: 8px; border-radius: 50%; background-color: #FF5F56;"></div>
+                    <div style="width: 8px; height: 8px; border-radius: 50%; background-color: #FFBD2E;"></div>
+                    <div style="width: 8px; height: 8px; border-radius: 50%; background-color: #27C93F;"></div>
+                </div>
+                <div class="title-indicator" style="position: absolute; left: 0.8in; top: 0.55in; width: 0.12in; height: 0.5in; background-color: var(--accent-color); border-radius: 2px;"></div>
+                <div class="slide-title" style="position: absolute; left: 1.05in; top: 0.4in; width: 11.45in; height: 0.8in; display: flex; align-items: center; font-size: 28pt; font-weight: bold; color: var(--title-color); font-family: var(--font-face);">
+                    The Core Paradigm
+                </div>
+                <div class="slide-subtitle" style="position: absolute; left: 0.8in; top: 0.9in; width: 11.7in; height: 0.3in; display: none; align-items: center; justify-content: center; font-size: 13pt; color: #A0AEC0; font-family: var(--font-face);">
+                    Industry Overview
+                </div>
+                <div class="slide-divider" style="position: absolute; left: 0.8in; top: 1.25in; width: 11.7in; border-bottom: 1.5px solid var(--divider-color);"></div>
+                <div class="centered-card">
+                    <div style="margin: 0; padding: 0; text-align: left; line-height: 1.5; margin-left: 0px; margin-bottom: 8px; "><span style="font-size: 18pt; color: var(--text-color); ">&quot;Embodied AI bridges the gap between passive digital reasoning and physical action. By grounding intelligence in 3D space, agents learn to perceive, simulate, and navigate the physical world.&quot;</span></div>
+                </div>
+            </div>
+            <div class="slide-num">Slide 2</div>
+        </div>
+        <div class="slide-item">
+            <div class="slide-frame">
+                <div style="position: absolute; left: 0.8in; top: 0.15in; width: 6.0in; height: 0.25in; font-size: 9pt; font-weight: bold; color: var(--text-color); opacity: 0.6; display: flex; align-items: center; font-family: var(--font-face);">
+                    SLIDE 02 | EMBODIED & SPATIAL AI
+                </div>
+                <div style="position: absolute; right: 0.8in; top: 0.23in; display: flex; gap: 6px;">
+                    <div style="width: 8px; height: 8px; border-radius: 50%; background-color: #FF5F56;"></div>
+                    <div style="width: 8px; height: 8px; border-radius: 50%; background-color: #FFBD2E;"></div>
+                    <div style="width: 8px; height: 8px; border-radius: 50%; background-color: #27C93F;"></div>
+                </div>
+                <div class="title-indicator" style="position: absolute; left: 0.8in; top: 0.55in; width: 0.12in; height: 0.5in; background-color: var(--accent-color); border-radius: 2px;"></div>
+                <div class="slide-title" style="position: absolute; left: 1.05in; top: 0.4in; width: 11.45in; height: 0.8in; display: flex; align-items: center; font-size: 28pt; font-weight: bold; color: var(--title-color); font-family: var(--font-face);">
+                    4 Core Domains of Spatial AI
+                </div>
+                <div class="slide-subtitle" style="position: absolute; left: 0.8in; top: 0.9in; width: 11.7in; height: 0.3in; display: none; align-items: center; justify-content: center; font-size: 13pt; color: #A0AEC0; font-family: var(--font-face);">
+                    Industry Overview
+                </div>
+                <div class="slide-divider" style="position: absolute; left: 0.8in; top: 1.25in; width: 11.7in; border-bottom: 1.5px solid var(--divider-color);"></div>
+                <div style="position: absolute; left: 0.8in; top: 1.6in; width: 11.7in; height: 4.8in; display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 0.3in;">
+                    <div class="premium-card" style="display: flex; flex-direction: row; align-items: center; gap: 0.2in; padding: 0.2in; height: auto;">
+                            <div style="font-size: 28pt; flex: 0 0 0.8in; text-align: center; line-height: 1;">💡</div>
+                            <div style="flex: 1; display: flex; flex-direction: column; text-align: left; gap: 0.02in; overflow: hidden;">
+                                <div class="premium-card-title" style="text-align: left; font-size: 13pt;">Embodied AI</div>
+                                <div class="premium-card-body" style="font-size: 10pt; margin-top: 3px; line-height: 1.35;"><div style="margin: 0; padding: 0; text-align: left; line-height: 1.5; margin-left: 0px; margin-bottom: 8px; "><span style="font-size: 10pt; color: var(--text-color); ">Bringing digital intelligence into physical robots to act, learn, and manipulate objects.</span></div></div>
+                            </div>
+                        </div>
+                    <div class="premium-card" style="display: flex; flex-direction: row; align-items: center; gap: 0.2in; padding: 0.2in; height: auto;">
+                            <div style="font-size: 28pt; flex: 0 0 0.8in; text-align: center; line-height: 1;">🔹</div>
+                            <div style="flex: 1; display: flex; flex-direction: column; text-align: left; gap: 0.02in; overflow: hidden;">
+                                <div class="premium-card-title" style="text-align: left; font-size: 13pt;">Spatial Perception</div>
+                                <div class="premium-card-body" style="font-size: 10pt; margin-top: 3px; line-height: 1.35;"><div style="margin: 0; padding: 0; text-align: left; line-height: 1.5; margin-left: 0px; margin-bottom: 8px; "><span style="font-size: 10pt; color: var(--text-color); ">Voxel-level 3D semantic mapping, real-time depth tracing, and active sensor fusion.</span></div></div>
+                            </div>
+                        </div>
+                    <div class="premium-card" style="display: flex; flex-direction: row; align-items: center; gap: 0.2in; padding: 0.2in; height: auto;">
+                            <div style="font-size: 28pt; flex: 0 0 0.8in; text-align: center; line-height: 1;">🔹</div>
+                            <div style="flex: 1; display: flex; flex-direction: column; text-align: left; gap: 0.02in; overflow: hidden;">
+                                <div class="premium-card-title" style="text-align: left; font-size: 13pt;">Autonomous Navigation</div>
+                                <div class="premium-card-body" style="font-size: 10pt; margin-top: 3px; line-height: 1.35;"><div style="margin: 0; padding: 0; text-align: left; line-height: 1.5; margin-left: 0px; margin-bottom: 8px; "><span style="font-size: 10pt; color: var(--text-color); ">Reactive trajectory optimization, localized SLAM, and dynamic obstacle avoidance.</span></div></div>
+                            </div>
+                        </div>
+                    <div class="premium-card" style="display: flex; flex-direction: row; align-items: center; gap: 0.2in; padding: 0.2in; height: auto;">
+                            <div style="font-size: 28pt; flex: 0 0 0.8in; text-align: center; line-height: 1;">🔹</div>
+                            <div style="flex: 1; display: flex; flex-direction: column; text-align: left; gap: 0.02in; overflow: hidden;">
+                                <div class="premium-card-title" style="text-align: left; font-size: 13pt;">Real-World Impact</div>
+                                <div class="premium-card-body" style="font-size: 10pt; margin-top: 3px; line-height: 1.35;"><div style="margin: 0; padding: 0; text-align: left; line-height: 1.5; margin-left: 0px; margin-bottom: 8px; "><span style="font-size: 10pt; color: var(--text-color); ">Deploying agents to automated assembly lines, warehouses, and complex physical environments.</span></div></div>
+                            </div>
+                        </div>
+                </div>
+            </div>
+            <div class="slide-num">Slide 3</div>
+        </div>
+        <div class="slide-item">
+            <div class="slide-frame">
+                <div style="position: absolute; left: 0.8in; top: 0.15in; width: 6.0in; height: 0.25in; font-size: 9pt; font-weight: bold; color: var(--text-color); opacity: 0.6; display: flex; align-items: center; font-family: var(--font-face);">
+                    SLIDE 03 | EMBODIED & SPATIAL AI
+                </div>
+                <div style="position: absolute; right: 0.8in; top: 0.23in; display: flex; gap: 6px;">
+                    <div style="width: 8px; height: 8px; border-radius: 50%; background-color: #FF5F56;"></div>
+                    <div style="width: 8px; height: 8px; border-radius: 50%; background-color: #FFBD2E;"></div>
+                    <div style="width: 8px; height: 8px; border-radius: 50%; background-color: #27C93F;"></div>
+                </div>
+                <div class="title-indicator" style="position: absolute; left: 0.8in; top: 0.55in; width: 0.12in; height: 0.5in; background-color: var(--accent-color); border-radius: 2px;"></div>
+                <div class="slide-title" style="position: absolute; left: 1.05in; top: 0.4in; width: 11.45in; height: 0.8in; display: flex; align-items: center; font-size: 28pt; font-weight: bold; color: var(--title-color); font-family: var(--font-face);">
+                    Embodied Agent Evolution
+                </div>
+                <div class="slide-subtitle" style="position: absolute; left: 0.8in; top: 0.9in; width: 11.7in; height: 0.3in; display: none; align-items: center; justify-content: center; font-size: 13pt; color: #A0AEC0; font-family: var(--font-face);">
+                    Industry Overview
+                </div>
+                <div class="slide-divider" style="position: absolute; left: 0.8in; top: 1.25in; width: 11.7in; border-bottom: 1.5px solid var(--divider-color);"></div>
+                <div style="position: absolute; left: 1.0in; top: 2.2in; width: 11.3in; height: 2px; border-bottom: 2px dashed var(--accent-color); opacity: 0.6;"></div>
+                <div style="position: absolute; left: 2.4666666666666663in; top: 2.05in; width: 0.3in; height: 0.3in; background-color: var(--accent-color); border-radius: 50%; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 3px solid var(--bg-color);"></div>
+                <div style="position: absolute; left: 2.1166666666666663in; top: 1.4in; width: 1.0in; height: 0.5in; display: flex; align-items: flex-end; justify-content: center; font-size: 18pt; font-weight: bold; color: var(--accent-color); font-family: var(--font-family);">01</div>
+                <div class="premium-card" style="position: absolute; left: 0.8in; top: 2.6in; width: 3.633333333333333in; height: 3.8in; padding: 0.2in 0.15in; display: flex; flex-direction: column; gap: 0.1in; align-items: center; text-align: center;">
+                        <div class="premium-card-title" style="font-size: 13pt; text-align: center; border-bottom: none;">Simulation Bootstrapping</div>
+                        <div style="margin-top: 5px; flex: 1; overflow: hidden; font-size: 11pt; text-align: left; width: 100%;"><div style="margin: 0; padding: 0; text-align: left; line-height: 1.5; margin-left: 0px; margin-bottom: 8px; "><span style="font-size: 11pt; color: var(--text-color); ">Warm-start agent policy networks in photorealistic synthetic virtual environments.</span></div></div>
+                    </div>
+                <div style="position: absolute; left: 6.499999999999999in; top: 2.05in; width: 0.3in; height: 0.3in; background-color: var(--accent-color); border-radius: 50%; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 3px solid var(--bg-color);"></div>
+                <div style="position: absolute; left: 6.1499999999999995in; top: 1.4in; width: 1.0in; height: 0.5in; display: flex; align-items: flex-end; justify-content: center; font-size: 18pt; font-weight: bold; color: var(--accent-color); font-family: var(--font-family);">02</div>
+                <div class="premium-card" style="position: absolute; left: 4.833333333333333in; top: 2.6in; width: 3.633333333333333in; height: 3.8in; padding: 0.2in 0.15in; display: flex; flex-direction: column; gap: 0.1in; align-items: center; text-align: center;">
+                        <div class="premium-card-title" style="font-size: 13pt; text-align: center; border-bottom: none;">Sim-to-Real Transfer</div>
+                        <div style="margin-top: 5px; flex: 1; overflow: hidden; font-size: 11pt; text-align: left; width: 100%;"><div style="margin: 0; padding: 0; text-align: left; line-height: 1.5; margin-left: 0px; margin-bottom: 8px; "><span style="font-size: 11pt; color: var(--text-color); ">Bridge the virtual-physical domain gaps using zero-shot domain randomization techniques.</span></div></div>
+                    </div>
+                <div style="position: absolute; left: 10.533333333333333in; top: 2.05in; width: 0.3in; height: 0.3in; background-color: var(--accent-color); border-radius: 50%; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 3px solid var(--bg-color);"></div>
+                <div style="position: absolute; left: 10.183333333333334in; top: 1.4in; width: 1.0in; height: 0.5in; display: flex; align-items: flex-end; justify-content: center; font-size: 18pt; font-weight: bold; color: var(--accent-color); font-family: var(--font-family);">03</div>
+                <div class="premium-card" style="position: absolute; left: 8.866666666666667in; top: 2.6in; width: 3.633333333333333in; height: 3.8in; padding: 0.2in 0.15in; display: flex; flex-direction: column; gap: 0.1in; align-items: center; text-align: center;">
+                        <div class="premium-card-title" style="font-size: 13pt; text-align: center; border-bottom: none;">Physical Autonomous Mastery</div>
+                        <div style="margin-top: 5px; flex: 1; overflow: hidden; font-size: 11pt; text-align: left; width: 100%;"><div style="margin: 0; padding: 0; text-align: left; line-height: 1.5; margin-left: 0px; margin-bottom: 8px; "><span style="font-size: 11pt; color: var(--text-color); ">Deploy agents to refine behaviors via self-supervised online reinforcement learning.</span></div></div>
+                    </div>
+            </div>
+            <div class="slide-num">Slide 4</div>
+        </div>
+        <div class="slide-item">
+            <div class="slide-frame">
+                <div style="position: absolute; left: 0.8in; top: 0.15in; width: 6.0in; height: 0.25in; font-size: 9pt; font-weight: bold; color: var(--text-color); opacity: 0.6; display: flex; align-items: center; font-family: var(--font-face);">
+                    SLIDE 04 | EMBODIED & SPATIAL AI
+                </div>
+                <div style="position: absolute; right: 0.8in; top: 0.23in; display: flex; gap: 6px;">
+                    <div style="width: 8px; height: 8px; border-radius: 50%; background-color: #FF5F56;"></div>
+                    <div style="width: 8px; height: 8px; border-radius: 50%; background-color: #FFBD2E;"></div>
+                    <div style="width: 8px; height: 8px; border-radius: 50%; background-color: #27C93F;"></div>
+                </div>
+                <div class="title-indicator" style="position: absolute; left: 0.8in; top: 0.55in; width: 0.12in; height: 0.5in; background-color: var(--accent-color); border-radius: 2px;"></div>
+                <div class="slide-title" style="position: absolute; left: 1.05in; top: 0.4in; width: 11.45in; height: 0.8in; display: flex; align-items: center; font-size: 28pt; font-weight: bold; color: var(--title-color); font-family: var(--font-face);">
+                    World Action Model (WAM)
+                </div>
+                <div class="slide-subtitle" style="position: absolute; left: 0.8in; top: 0.9in; width: 11.7in; height: 0.3in; display: none; align-items: center; justify-content: center; font-size: 13pt; color: #A0AEC0; font-family: var(--font-face);">
+                    Industry Overview
+                </div>
+                <div class="slide-divider" style="position: absolute; left: 0.8in; top: 1.25in; width: 11.7in; border-bottom: 1.5px solid var(--divider-color);"></div>
+                <div class="text-card">
+                        <div style="margin: 0; padding: 0; text-align: left; line-height: 1.5; display: flex; align-items: flex-start; margin-left: 0px; margin-bottom: 8px; "><div style="flex-shrink: 0; width: 18px; text-align: left; font-size: 13pt; color: var(--accent-color); line-height: 1.4; padding-top: 1px;">•</div><div style="flex-grow: 1;"><span style="font-size: 13pt; font-weight: bold; color: var(--text-color); ">Spatiotemporal Cross-Attention</span><span style="font-size: 13pt; color: var(--text-color); ">: Processes history spatial tokens and predicts subsequent action states.</span></div></div><div style="margin: 0; padding: 0; text-align: left; line-height: 1.5; display: flex; align-items: flex-start; margin-left: 0px; margin-bottom: 8px; "><div style="flex-shrink: 0; width: 18px; text-align: left; font-size: 13pt; color: var(--accent-color); line-height: 1.4; padding-top: 1px;">•</div><div style="flex-grow: 1;"><span style="font-size: 13pt; font-weight: bold; color: var(--text-color); ">Spatial Register Tokens</span><span style="font-size: 13pt; color: var(--text-color); ">: Encodes 3D physical coordinates into unified embedding representations.</span></div></div><div style="margin: 0; padding: 0; text-align: left; line-height: 1.5; display: flex; align-items: flex-start; margin-left: 0px; margin-bottom: 8px; "><div style="flex-shrink: 0; width: 18px; text-align: left; font-size: 13pt; color: var(--accent-color); line-height: 1.4; padding-top: 1px;">•</div><div style="flex-grow: 1;"><span style="font-size: 13pt; font-weight: bold; color: var(--text-color); ">Physics Constraint Bounds</span><span style="font-size: 13pt; color: var(--text-color); ">: Enforces structural collision limits and gravitational constants directly in latent space.</span></div></div>
+                    </div>
+                <div class="image-card-frame" style="left: 6.8in; top: 1.6in; width: 4.8in; height: 4.8in;">
+                        <img src="file:///c:/Users/Administrator/.gemini/skills/markdown-to-pptx/assets/model_architecture.jpg" style="width: 100%; height: 100%; object-fit: contain;">
+                    </div>
+            </div>
+            <div class="slide-num">Slide 5</div>
+        </div>
+    </div>
+    
+    <div class="toolbar">
+        <span class="toolbar-title">切换主题预览:</span>
+        <button class="theme-btn" onclick="setTheme('light', this)">极简浅色</button>
+        <button class="theme-btn" onclick="setTheme('spatial', this)">具身空间</button>
+        <button class="theme-btn" onclick="setTheme('dark', this)">科技深色</button>
+        <button class="theme-btn" onclick="setTheme('warm', this)">优雅沙滩</button>
+        <button class="theme-btn" onclick="setTheme('aurora', this)">极光幻彩</button>
+        <button class="theme-btn" onclick="setTheme('forest', this)">清新森林</button>
+        <button class="theme-btn" onclick="setTheme('ocean', this)">深邃海洋</button>
+        <span style="color: rgba(255,255,255,0.2); margin: 0 5px;">|</span>
+        <span class="toolbar-title">下载对应的 PPTX:</span>
+        <a id="download-link" href="#" class="theme-btn" style="background: #10B981; color: #FFFFFF; text-decoration: none; display: inline-flex; align-items: center; gap: 5px;" download>
+            📥 下载当前版本
+        </a>
+    </div>
+    
+    <script>
+        const baseName = 'test_out';
+        function setTheme(theme, btn) {
+            document.body.className = 'theme-' + theme;
+            document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
+            if (btn) btn.classList.add('active');
+            else {
+                // Find button matching theme
+                const btns = document.querySelectorAll('.theme-btn');
+                btns.forEach(b => {
+                    if (b.getAttribute('onclick').includes(theme)) b.classList.add('active');
+                });
+            }
+            
+            // Update download link
+            const downloadLink = document.getElementById('download-link');
+            downloadLink.href = baseName + '_' + theme + '.pptx';
+            downloadLink.innerText = '📥 下载 ' + getThemeName(theme) + ' PPTX';
+        }
+        function getThemeName(theme) {
+            switch(theme) {
+                case 'light': return '极简浅色';
+                case 'spatial': return '具身空间';
+                case 'dark': return '科技深色';
+                case 'warm': return '优雅沙滩';
+                case 'aurora': return '极光幻彩';
+                case 'forest': return '清新森林';
+                case 'ocean': return '深邃海洋';
+                default: return '当前';
+            }
+        }
+        // Initialize
+        setTheme('spatial');
+    </script>
+
+</body>
+</html>
