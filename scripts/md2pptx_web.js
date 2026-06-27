@@ -939,6 +939,28 @@ function generateHtmlPreview(slidesData, pptxPath, themeMode = "all") {
     const basePptxName = path.basename(pptxPath);
     const baseNameWithoutExt = basePptxName.replace(/\.pptx$/i, '');
     
+    // Generate CSS token blocks + bg-image rules from themes.json (source of truth)
+    const themeTokenCss = Object.keys(THEMES).map(k => {
+        const t = THEMES[k];
+        return `        body.theme-${k} {
+            --bg-color: #${t.bg};
+            --card-bg: #${t.cardBg};
+            --card-border: #${t.cardBorder};
+            --title-color: #${t.titleColor};
+            --text-color: #${t.textColor};
+            --accent-color: #${t.accentColor};
+            --formula-color: #${t.formulaColor};
+            --divider-color: #${t.dividerColor};
+            --font-family: ${t.fontFamily};
+        }`;
+    }).join('\n');
+    const themeBgCss = Object.keys(THEMES).filter(k => THEMES[k].bgImage).map(k => `        .theme-${k} .slide-frame {
+            background-image: url('assets/${k}_bg.jpg') !important;
+            background-size: cover !important;
+            background-position: center !important;
+        }`).join('\n');
+    const themeNamesMap = Object.fromEntries(Object.entries(THEMES).map(([k, v]) => [k, v.name]));
+    
     let htmlContent = `<!DOCTYPE html>
 <html>
 <head>
@@ -1414,6 +1436,9 @@ function generateHtmlPreview(slidesData, pptxPath, themeMode = "all") {
             color: #0F172A;
             box-shadow: 0 0 10px rgba(56, 189, 248, 0.5);
         }
+        /* === generated from themes.json (overrides hardcoded tokens above) === */
+${themeTokenCss}
+${themeBgCss}
     </style>
 </head>
 <body>`;
@@ -1476,16 +1501,7 @@ function generateHtmlPreview(slidesData, pptxPath, themeMode = "all") {
         switcherHtml = `
     <div class="toolbar">
         <span class="toolbar-title">切换主题预览:</span>
-        <button class="theme-btn" onclick="setTheme('light', this)">极简浅色</button>
-        <button class="theme-btn" onclick="setTheme('spatial', this)">动漫风格</button>
-        <button class="theme-btn" onclick="setTheme('cyberpunk', this)">赛博朋克</button>
-        <button class="theme-btn" onclick="setTheme('holodeck', this)">全息甲板</button>
-        <button class="theme-btn" onclick="setTheme('dark', this)">科技深色</button>
-        <button class="theme-btn" onclick="setTheme('warm', this)">优雅沙滩</button>
-        <button class="theme-btn" onclick="setTheme('aurora', this)">极光幻彩</button>
-        <button class="theme-btn" onclick="setTheme('forest', this)">清新森林</button>
-        <button class="theme-btn" onclick="setTheme('ocean', this)">深邃海洋</button>
-        <button class="theme-btn" onclick="setTheme('ghibli', this)">吉卜力</button>
+${Object.keys(THEMES).map(k => `        <button class="theme-btn" onclick="setTheme('${k}', this)">${THEMES[k].name}</button>`).join('\n')}
         <span style="color: rgba(255,255,255,0.2); margin: 0 5px;">|</span>
         <span class="toolbar-title">下载对应的 PPTX:</span>
         <a id="download-link" href="#" class="theme-btn" style="background: #10B981; color: #FFFFFF; text-decoration: none; display: inline-flex; align-items: center; gap: 5px;" download>
@@ -1495,6 +1511,7 @@ function generateHtmlPreview(slidesData, pptxPath, themeMode = "all") {
     
     <script>
         const baseName = '${baseNameWithoutExt}';
+        const THEME_NAMES = ${JSON.stringify(themeNamesMap)};
         function setTheme(theme, btn) {
             document.body.className = 'theme-' + theme;
             document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
@@ -1521,19 +1538,7 @@ function generateHtmlPreview(slidesData, pptxPath, themeMode = "all") {
             downloadLink.innerText = '📥 下载 ' + getThemeName(theme) + ' PPTX';
         }
         function getThemeName(theme) {
-            switch(theme) {
-                case 'light': return '极简浅色';
-                case 'spatial': return '动漫风格';
-                case 'cyberpunk': return '赛博朋克';
-                case 'holodeck': return '全息甲板';
-                case 'dark': return '科技深色';
-                case 'warm': return '优雅沙滩';
-                case 'aurora': return '极光幻彩';
-                case 'forest': return '清新森林';
-                case 'ocean': return '深邃海洋';
-                case 'ghibli': return '吉卜力';
-                default: return '当前';
-            }
+            return THEME_NAMES[theme] || '当前';
         }
         // Initialize
         const defaultInitTheme = '${inputFile.toLowerCase().includes('cyberpunk') ? 'cyberpunk' : inputFile.toLowerCase().includes('holodeck') ? 'holodeck' : inputFile.toLowerCase().includes('ghibli') ? 'ghibli' : 'spatial'}';
@@ -1543,7 +1548,7 @@ function generateHtmlPreview(slidesData, pptxPath, themeMode = "all") {
     } else {
         switcherHtml = `
     <div class="toolbar">
-        <span class="toolbar-title">当前主题: ${themeMode === 'light' ? '极简浅色' : themeMode === 'spatial' ? '动漫风格' : themeMode === 'cyberpunk' ? '赛博朋克' : themeMode === 'holodeck' ? '全息甲板' : themeMode === 'dark' ? '科技深色' : themeMode === 'warm' ? '优雅沙滩' : themeMode === 'aurora' ? '极光幻彩' : themeMode === 'forest' ? '清新森林' : themeMode === 'ghibli' ? '吉卜力' : '深邃海洋'}</span>
+        <span class="toolbar-title">当前主题: ${THEMES[themeMode] ? THEMES[themeMode].name : themeMode}</span>
         <span style="color: rgba(255,255,255,0.2); margin: 0 5px;">|</span>
         <a href="${basePptxName}" class="theme-btn" style="background: #10B981; color: #FFFFFF; text-decoration: none; display: inline-flex; align-items: center; gap: 5px;" download>
             📥 下载 PPTX 文件
@@ -1610,128 +1615,7 @@ function getIconForTitle(title) {
     return "🔹";
 }
 
-const THEMES = {
-    cyberpunk: {
-        bg: "030611",
-        cardBg: "060B1A",
-        cardBorder: "162C3F",
-        titleColor: "00F0FF",
-        textColor: "F1F5F9",
-        accentColor: "BC39FA",
-        formulaColor: "00F0FF",
-        dividerColor: "00F0FF",
-        fontFace: "Cascadia Mono",
-        isDark: true
-    },
-    light: {
-        bg: "F8F9FA",
-        cardBg: "FFFFFF",
-        cardBorder: "E2E8F0",
-        titleColor: "0F172A",
-        textColor: "334155",
-        accentColor: "2563EB",
-        formulaColor: "2563EB",
-        dividerColor: "E2E8F0",
-        fontFace: "Segoe UI",
-        isDark: false
-    },
-    spatial: {
-        bg: "060E11",
-        cardBg: "0E1A1E",
-        cardBorder: "163D3F",
-        titleColor: "2DD4BF",
-        textColor: "D1E2E4",
-        accentColor: "14B8A6",
-        formulaColor: "2DD4BF",
-        dividerColor: "163D3F",
-        fontFace: "Trebuchet MS",
-        isDark: true
-    },
-    holodeck: {
-        bg: "080806",
-        cardBg: "12110E",
-        cardBorder: "2A2215",
-        titleColor: "F59E0B",
-        textColor: "E5E5E5",
-        accentColor: "F59E0B",
-        formulaColor: "FBBF24",
-        dividerColor: "2A2215",
-        fontFace: "Cascadia Mono",
-        isDark: true
-    },
-    dark: {
-        bg: "0F172A",
-        cardBg: "1E293B",
-        cardBorder: "334155",
-        titleColor: "38BDF8",
-        textColor: "E2E8F0",
-        accentColor: "38BDF8",
-        formulaColor: "0EA5E9",
-        dividerColor: "334155",
-        fontFace: "Trebuchet MS",
-        isDark: true
-    },
-    warm: {
-        bg: "FAF6F0",
-        cardBg: "FFFDF9",
-        cardBorder: "E6DFD3",
-        titleColor: "3F2E2C",
-        textColor: "4A3E3D",
-        accentColor: "D97706",
-        formulaColor: "B45309",
-        dividerColor: "E6DFD3",
-        fontFace: "Georgia",
-        isDark: false
-    },
-    aurora: {
-        bg: "FAF5FF",
-        cardBg: "FFFFFF",
-        cardBorder: "E9D5FF",
-        titleColor: "7C3AED",
-        textColor: "4B5563",
-        accentColor: "D946EF",
-        formulaColor: "C084FC",
-        dividerColor: "E9D5FF",
-        fontFace: "Trebuchet MS",
-        isDark: false
-    },
-    forest: {
-        bg: "F4F7F5",
-        cardBg: "FFFFFF",
-        cardBorder: "D1DDD4",
-        titleColor: "1C3F24",
-        textColor: "2F3E32",
-        accentColor: "10B981",
-        formulaColor: "059669",
-        dividerColor: "D1DDD4",
-        fontFace: "Segoe UI",
-        isDark: false
-    },
-    ocean: {
-        bg: "F0F7FF",
-        cardBg: "FFFFFF",
-        cardBorder: "C7D2FE",
-        titleColor: "1E3A8A",
-        textColor: "374151",
-        accentColor: "3B82F6",
-        formulaColor: "2563EB",
-        dividerColor: "C7D2FE",
-        fontFace: "Segoe UI",
-        isDark: false
-    },
-    ghibli: {
-        bg: "EAF3E1",
-        cardBg: "FBF7EE",
-        cardBorder: "C9D9C0",
-        titleColor: "2F5D3A",
-        textColor: "4A3E2D",
-        accentColor: "D9A441",
-        formulaColor: "B45309",
-        dividerColor: "C9D9C0",
-        fontFace: "Georgia",
-        isDark: false
-    }
-};
+const THEMES = JSON.parse(fs.readFileSync(path.join(__dirname, 'themes.json'), 'utf-8'));
 
 function addPremiumCard(slide, x, y, w, h, theme, hasAccentBar = true) {
     slide.addShape('roundRect', {

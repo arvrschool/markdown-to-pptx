@@ -1,0 +1,82 @@
+{
+  "light": {
+    "name": "极简浅色",
+    "bg": "F8F9FA", "cardBg": "FFFFFF", "cardBorder": "E2E8F0",
+    "titleColor": "0F172A", "textColor": "334155",
+    "accentColor": "2563EB", "formulaColor": "2563EB", "dividerColor": "E2E8F0",
+    "fontFace": "Segoe UI", "fontFamily": "\"Segoe UI\", -apple-system, sans-serif",
+    "isDark": false, "bgImage": false
+  },
+  "spatial": {
+    "name": "动漫风格",
+    "bg": "060E11", "cardBg": "0E1A1E", "cardBorder": "163D3F",
+    "titleColor": "2DD4BF", "textColor": "D1E2E4",
+    "accentColor": "14B8A6", "formulaColor": "2DD4BF", "dividerColor": "163D3F",
+    "fontFace": "Trebuchet MS", "fontFamily": "\"Trebuchet MS\", \"Segoe UI\", -apple-system, sans-serif",
+    "isDark": true, "bgImage": true
+  },
+  "cyberpunk": {
+    "name": "赛博朋克",
+    "bg": "030611", "cardBg": "060B1A", "cardBorder": "162C3F",
+    "titleColor": "00F0FF", "textColor": "F1F5F9",
+    "accentColor": "BC39FA", "formulaColor": "00F0FF", "dividerColor": "00F0FF",
+    "fontFace": "Cascadia Mono", "fontFamily": "\"Cascadia Mono\", \"Courier New\", monospace",
+    "isDark": true, "bgImage": true
+  },
+  "holodeck": {
+    "name": "全息甲板",
+    "bg": "080806", "cardBg": "12110E", "cardBorder": "2A2215",
+    "titleColor": "F59E0B", "textColor": "E5E5E5",
+    "accentColor": "F59E0B", "formulaColor": "FBBF24", "dividerColor": "2A2215",
+    "fontFace": "Cascadia Mono", "fontFamily": "\"Cascadia Mono\", \"Courier New\", monospace",
+    "isDark": true, "bgImage": true
+  },
+  "dark": {
+    "name": "科技深色",
+    "bg": "0F172A", "cardBg": "1E293B", "cardBorder": "334155",
+    "titleColor": "38BDF8", "textColor": "E2E8F0",
+    "accentColor": "38BDF8", "formulaColor": "0EA5E9", "dividerColor": "334155",
+    "fontFace": "Trebuchet MS", "fontFamily": "\"Segoe UI\", \"Trebuchet MS\", -apple-system, sans-serif",
+    "isDark": true, "bgImage": false
+  },
+  "warm": {
+    "name": "优雅沙滩",
+    "bg": "FAF6F0", "cardBg": "FFFDF9", "cardBorder": "E6DFD3",
+    "titleColor": "3F2E2C", "textColor": "4A3E3D",
+    "accentColor": "D97706", "formulaColor": "B45309", "dividerColor": "E6DFD3",
+    "fontFace": "Georgia", "fontFamily": "\"Georgia\", serif",
+    "isDark": false, "bgImage": false
+  },
+  "aurora": {
+    "name": "极光幻彩",
+    "bg": "FAF5FF", "cardBg": "FFFFFF", "cardBorder": "E9D5FF",
+    "titleColor": "7C3AED", "textColor": "4B5563",
+    "accentColor": "D946EF", "formulaColor": "C084FC", "dividerColor": "E9D5FF",
+    "fontFace": "Trebuchet MS", "fontFamily": "\"Trebuchet MS\", \"Arial\", sans-serif",
+    "isDark": false, "bgImage": false
+  },
+  "forest": {
+    "name": "清新森林",
+    "bg": "F4F7F5", "cardBg": "FFFFFF", "cardBorder": "D1DDD4",
+    "titleColor": "1C3F24", "textColor": "2F3E32",
+    "accentColor": "10B981", "formulaColor": "059669", "dividerColor": "D1DDD4",
+    "fontFace": "Segoe UI", "fontFamily": "\"Segoe UI\", -apple-system, sans-serif",
+    "isDark": false, "bgImage": false
+  },
+  "ocean": {
+    "name": "深邃海洋",
+    "bg": "F0F7FF", "cardBg": "FFFFFF", "cardBorder": "C7D2FE",
+    "titleColor": "1E3A8A", "textColor": "374151",
+    "accentColor": "3B82F6", "formulaColor": "2563EB", "dividerColor": "C7D2FE",
+    "fontFace": "Segoe UI", "fontFamily": "\"Calibri\", \"Segoe UI\", -apple-system, sans-serif",
+    "isDark": false, "bgImage": false
+  },
+  "ghibli": {
+    "name": "吉卜力",
+    "bg": "EAF3E1", "cardBg": "FBF7EE", "cardBorder": "C9D9C0",
+    "titleColor": "2F5D3A", "textColor": "4A3E2D",
+    "accentColor": "D9A441", "formulaColor": "B45309", "dividerColor": "C9D9C0",
+    "fontFace": "Georgia", "fontFamily": "\"Georgia\", \"Segoe UI\", serif",
+    "isDark": false, "bgImage": true
+  }
+}
