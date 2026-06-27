@@ -12,7 +12,7 @@ It is also fully compatible as a **Google Antigravity Custom Skill**, enabling y
 
 #### 1. Concept Design vs. Actual Generated PPTX & HTML Previews:
 *   **Design Concept Mockup (Generated via AIGC)**:
-    ![Design Concept Mockup](assets/spatial_ai_preview.jpg)
+    ![Design Concept Mockup](assets/pptx_html_actual_preview.jpg)
 *   **Actual Generated PPT and HTML Effect**:
     ![Actual HTML Presentation Effect](assets/spatial_ai_preview_v2_actual_1.jpg)
     ![Actual PPTX Presentation Effect](assets/spatial_ai_preview_v2_actual_2.jpg)

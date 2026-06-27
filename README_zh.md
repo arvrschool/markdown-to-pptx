@@ -12,7 +12,7 @@
 
 #### 1. 概念设计效果图 vs. 实际生成的 PPT 与 HTML 预览效果对比：
 *   **设计概念效果图 (AIGC 生成)**：
-    ![设计概念效果图](assets/spatial_ai_preview.jpg)
+    ![设计概念效果图](assets/pptx_html_actual_preview.jpg)
 *   **实际生成的PPT和HTML效果图**：
     ![实际渲染效果 - 图1](assets/spatial_ai_preview_v2_actual_1.jpg)
     ![实际渲染效果 - 图2](assets/spatial_ai_preview_v2_actual_2.jpg)
