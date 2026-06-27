@@ -615,7 +615,7 @@ function renderSlideListHtml(slidesList, globalSlidesData) {
                         <div class="premium-card-body" style="font-size: 10pt; line-height: 1.35; overflow: hidden; color: var(--text-main);">${formatMarkdownTokens(el.content.body || '')}</div>
                     </div>\n`;
                 } else if (el.type === 'image') {
-                    content += `                    <div class="image-card-frame cyber-chassis" style="${posStyle}">
+                    content += `                    <div class="image-card-frame" style="${posStyle}">
                         <img src="${el.content.path}" style="width: 100%; height: 100%; object-fit: contain;">
                     </div>\n`;
                 } else if (el.type === 'vector') {
@@ -1114,7 +1114,7 @@ function generateHtmlPreview(slidesData, pptxPath, themeMode = "all") {
             --accent-color: #BC39FA;
             --formula-color: #00F0FF;
             --divider-color: #00F0FF;
-            --font-family: "Share Tech Mono", "Courier New", monospace;
+            --font-family: "Cascadia Mono", "Courier New", monospace;
         }
         .theme-cyberpunk .title-indicator {
             display: none !important;
@@ -1163,7 +1163,7 @@ function generateHtmlPreview(slidesData, pptxPath, themeMode = "all") {
             --accent-color: #F59E0B;
             --formula-color: #FBBF24;
             --divider-color: #2A2215;
-            --font-family: "Share Tech Mono", "Courier New", monospace;
+            --font-family: "Cascadia Mono", "Courier New", monospace;
         }
         .theme-holodeck .title-indicator {
             display: none !important;
@@ -1620,7 +1620,7 @@ const THEMES = {
         accentColor: "BC39FA",
         formulaColor: "00F0FF",
         dividerColor: "00F0FF",
-        fontFace: "Share Tech Mono",
+        fontFace: "Cascadia Mono",
         isDark: true
     },
     light: {
@@ -1656,7 +1656,7 @@ const THEMES = {
         accentColor: "F59E0B",
         formulaColor: "FBBF24",
         dividerColor: "2A2215",
-        fontFace: "Share Tech Mono",
+        fontFace: "Cascadia Mono",
         isDark: true
     },
     dark: {
