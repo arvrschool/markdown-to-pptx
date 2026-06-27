@@ -13,7 +13,7 @@ Whenever you are asked to generate a PPTX from Markdown using this skill, you **
 Use your `ask_question` tool to present an interactive modal containing ONLY the first two questions:
 
 **Question 1: Template & Presentation Engine Mode**
-- Option A: JS Web Engine - Precompiled Visual Themes (Minimalist Light, Cyber Dark, Cyberpunk, Warm Editorial, Aurora Purple, Sage Forest, Deep Ocean)
+- Option A: JS Web Engine - Precompiled Visual Themes (Minimalist Light, Cyber Dark, Cyberpunk, Warm Editorial, Aurora Purple, Sage Forest, Deep Ocean, Spatial AI, Holodeck, Ghibli Anime)
 - Option B: JS Web Engine - AIGC Dynamic Synthesis (Spatial/Custom Mockup) - Overlays vector shapes and text cards onto an AI-generated or custom background slide template.
 - Option C: Python Engine - Slide Master Template (Relies on PPT autofit, best used if you have a strict custom corporate `.pptx` template)
 
@@ -29,7 +29,7 @@ Once the user submits their choices for Step 1, branch as follows:
 #### Branch A: If user chose Option A (Precompiled Visual Themes)
 Immediately use the `ask_question` tool again to ask the theme selection question:
 **Question 3: Specific Preset Theme**
-- Option A: (Recommended) All Preset Themes - Generates all 8 preset themes with an interactive switcher HTML preview.
+- Option A: (Recommended) All Preset Themes - Generates all 10 preset themes with an interactive switcher HTML preview.
 - Option B: Minimalist Light - Clean light theme with corporate blue accents.
 - Option C: Cyber Dark - Tech-inspired dark theme with glowing neon sky-blue accents.
 - Option D: Cyberpunk - Cyberpunk tech dark theme with custom HUD widgets and neon purple/cyan accents.
@@ -38,6 +38,8 @@ Immediately use the `ask_question` tool again to ask the theme selection questio
 - Option G: Sage Forest - Serene natural green tones for a calming corporate look.
 - Option H: Deep Ocean - Trustworthy corporate deep blue theme.
 - Option I: Spatial AI - Dark teal spatial intelligence theme with grid background and rounded cards.
+- Option J: Holodeck - Retro-future amber hologram theme with scanning sphere and glowing grid lines.
+- Option K: Ghibli Anime - Studio Ghibli watercolor anime style with hand-drawn parchment cards on meadow scenery, warm Georgia serif typography.
 
 #### Branch B: If user chose Option B (AIGC Dynamic Synthesis)
 Do NOT proceed immediately. You **MUST** first ask the user in Chinese to provide a style template mockup image path, or ask if they want you to generate one using the image generation tool. You must offer to the user a few Chinese prompt examples (like spatial, cyberpunk, holodeck HUD designs) and ask them to choose or write their own prompt. You cannot compile or write DSL layout files until the template visual tone is aligned.
@@ -108,7 +110,7 @@ Best for high-density content where you want the script to calculate and dynamic
 ```bash
 node scripts/md2pptx_web.js input.md -o output.pptx -t <theme>
 ```
-Where `<theme>` is one of: `all`, `light`, `dark`, `warm`, `aurora`, `forest`, `ocean`, `spatial`, `cyberpunk`.
+Where `<theme>` is one of: `all`, `light`, `dark`, `warm`, `aurora`, `forest`, `ocean`, `spatial`, `cyberpunk`, `holodeck`, `ghibli`.
 *(Requires `pptxgenjs` via Node.js)*
 
 ## AIGC Slide Generation Paradigm (基于 AI 矢量分层的幻灯片生成范式)
@@ -258,7 +260,7 @@ This is a single central idea or quote. Because it has very few characters, it t
 ```bash
 node scripts/md2pptx_web.js tests/test_deck.json -o output.pptx -t all
 ```
-该指令会验证 JSON 格式，编译出 `output.html` (支持一键切换 8 大主题的预览与切换) 以及对应的 `output_spatial.pptx` / `output_cyberpunk.pptx` 等实体幻灯片。
+该指令会验证 JSON 格式，编译出 `output.html` (支持一键切换 10 大主题的预览与切换) 以及对应的 `output_spatial.pptx` / `output_cyberpunk.pptx` 等实体幻灯片。
 
 ---
 

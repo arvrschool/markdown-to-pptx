@@ -17,8 +17,14 @@ It is also fully compatible as a **Google Antigravity Custom Skill**, enabling y
     ![Actual HTML Presentation Effect](assets/spatial_ai_preview_v2_actual_1.jpg)
     ![Actual PPTX Presentation Effect](assets/spatial_ai_preview_v2_actual_2.jpg)
 
-#### 2. Precompiled Global Themes (Minimalist Light, Cyber Dark, Warm Editorial, Sage Forest):
+#### 2. Precompiled Global Themes (Minimalist Light, Cyber Dark, Warm Editorial, Sage Forest, etc.):
 ![Precompiled Themes Grid](assets/themes_preview.jpg)
+
+#### 3. AIGC Dynamic Theme Demos (Cyberpunk · Ghibli Anime):
+| Cyberpunk HUD Terminal | Ghibli Watercolor Anime |
+|:---:|:---:|
+| ![Cyberpunk Demo](assets/cyberpunk_demo.gif) | ![Ghibli Demo](assets/ghibli_demo.gif) |
+| *High-density asymmetric neon HUD cards* | *Hand-drawn parchment cards on meadow scenery* |
 
 ---
 
@@ -51,7 +57,7 @@ graph LR
   - **Horizontal Grid Cards**: Aligns bullet points horizontally as stylish, border-bordered cards.
   - **Timeline/Sequence**: Renders numbered steps as a chronological sequence chain.
   - **Asymmetric Split**: Splits slides into text columns and image columns with safe margins.
-* **Multi-Theme Support (JS Engine)**: Includes 6 curated color palettes (Minimalist Light, Cyber Dark, Warm Editorial, Aurora Purple, Sage Forest, Deep Ocean).
+* **Multi-Theme Support (JS Engine)**: Includes 10 curated color palettes (Minimalist Light, Cyber Dark, Cyberpunk, Warm Editorial, Aurora Purple, Sage Forest, Deep Ocean, Spatial AI, Holodeck, Ghibli Anime).
 * **Speaker Notes**: Extracts `<!-- notes: ... -->` comments from Markdown directly into PowerPoint speaker notes.
 * **Image Auto-Fitting**: Detects images in Markdown syntax (`![caption](path)`) and aligns them dynamically.
 
@@ -95,7 +101,7 @@ python scripts/md2pptx.py input.md -t corporate_template.pptx -o output.pptx
 ### Option B: JS Web Engine (Dynamic Cards & Themes)
 Best for academic paper reviews, technical presentations, and complex layout structures.
 
-**Standard Conversion (Generates all 7 themes with an HTML switcher):**
+**Standard Conversion (Generates all 10 themes with an HTML switcher):**
 ```bash
 node scripts/md2pptx_web.js input.md -o output.pptx -t all
 ```
@@ -104,7 +110,7 @@ node scripts/md2pptx_web.js input.md -o output.pptx -t all
 ```bash
 node scripts/md2pptx_web.js input.md -o output.pptx -t <theme>
 ```
-*Available themes:* `light`, `dark`, `warm`, `aurora`, `forest`, `ocean`, `spatial`.
+*Available themes:* `light`, `dark`, `warm`, `aurora`, `forest`, `ocean`, `spatial`, `cyberpunk`, `holodeck`, `ghibli`.
 
 ---
 

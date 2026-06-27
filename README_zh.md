@@ -17,8 +17,14 @@
     ![实际渲染效果 - 图1](assets/spatial_ai_preview_v2_actual_1.jpg)
     ![实际渲染效果 - 图2](assets/spatial_ai_preview_v2_actual_2.jpg)
 
-#### 2. 其他预置全局主题效果（极简浅色、科技深色、优雅沙滩、清新森林）：
+#### 2. 其他预置全局主题效果（极简浅色、科技深色、优雅沙滩、清新森林等）：
 ![预置全局主题效果](assets/themes_preview.jpg)
+
+#### 3. AIGC 动态主题演示 (赛博朋克 · 吉卜力动漫)：
+| 赛博朋克 HUD 终端 | 吉卜力水彩动漫 |
+|:---:|:---:|
+| ![赛博朋克演示](assets/cyberpunk_demo.gif) | ![吉卜力演示](assets/ghibli_demo.gif) |
+| *高密度不对称霓虹 HUD 卡片* | *手绘水彩羊皮纸卡片·草地蓝天背景* |
 
 ---
 
@@ -51,7 +57,7 @@ graph LR
   - **Horizontal Grid Cards (水平栅格卡片)**：将无序列表水平排列为精美的微立体边框卡片。
   - **Timeline/Sequence (时间轴/步骤链)**：将带序号的步骤渲染为带节点的时序链条。
   - **Asymmetric Split (非对称双栏)**：将幻灯片拆分为文本卡片与图片卡片，预留 5% 安全边距防溢出。
-* **多主题支持 (JS 引擎)**：内置 6 种精心调配的色彩搭配（Minimalist Light、Cyber Dark、Warm Editorial、Aurora Purple、Sage Forest、Deep Ocean）。
+* **多主题支持 (JS 引擎)**：内置 10 种精心调配的色彩搭配（Minimalist Light、Cyber Dark、Cyberpunk、Warm Editorial、Aurora Purple、Sage Forest、Deep Ocean、Spatial AI、Holodeck、Ghibli 吉卜力动漫）。
 * **演讲者备注**：提取 Markdown 中的 `<!-- notes: ... -->` 注释直接写入 PowerPoint 备注栏。
 * **图片自动适配**：解析 Markdown 图片语法 (`![图注](路径)`) 并进行动态重心对齐。
 
@@ -95,7 +101,7 @@ python scripts/md2pptx.py input.md -t corporate_template.pptx -o output.pptx
 ### 选项 B：JS Web 引擎（动态卡片与主题）
 适合学术论文解读、技术分享以及复杂的布局展示。
 
-**标准转换（一次性生成所有 7 种主题，附带 HTML 预览切换器）：**
+**标准转换（一次性生成所有 10 种主题，附带 HTML 预览切换器）：**
 ```bash
 node scripts/md2pptx_web.js input.md -o output.pptx -t all
 ```
@@ -104,7 +110,7 @@ node scripts/md2pptx_web.js input.md -o output.pptx -t all
 ```bash
 node scripts/md2pptx_web.js input.md -o output.pptx -t <theme>
 ```
-*可选主题：* `light`, `dark`, `warm`, `aurora`, `forest`, `ocean`, `spatial`（「具身空间」科技主题）。
+*可选主题：* `light`, `dark`, `warm`, `aurora`, `forest`, `ocean`, `spatial`, `cyberpunk`, `holodeck`, `ghibli`（吉卜力水彩风）。
 
 ---
 
