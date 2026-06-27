@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 const fs = require('fs');
 const path = require('path');
+const JSZip = require('jszip');
 const pptxgen = require('pptxgenjs');
 const { execSync } = require('child_process');
 
@@ -1636,6 +1637,30 @@ function addPremiumCard(slide, x, y, w, h, theme, hasAccentBar = true) {
     }
 }
 
+function addCjkFont(pptxPath, cjkFont = 'Microsoft YaHei') {
+    const data = fs.readFileSync(pptxPath);
+    return JSZip.loadAsync(data).then(zip => {
+        const themeFile = 'ppt/theme/theme1.xml';
+        if (!zip.file(themeFile)) return;
+        
+        return zip.file(themeFile).async('string').then(xml => {
+            const ensureEa = (match) => {
+                if (match.includes('<a:ea')) {
+                    return match.replace(/<a:ea[^>]*\/>/, `<a:ea typeface="${cjkFont}"/>`);
+                }
+                return match.replace(/(<\/a:majorFont>|<\/a:minorFont>)/, `      <a:ea typeface="${cjkFont}"/>\n      $1`);
+            };
+            xml = xml.replace(/<a:majorFont[^>]*>[\s\S]*?<\/a:majorFont>/g, ensureEa);
+            xml = xml.replace(/<a:minorFont[^>]*>[\s\S]*?<\/a:minorFont>/g, ensureEa);
+            
+            zip.file(themeFile, xml);
+            return zip.generateAsync({ type: 'nodebuffer', compression: 'DEFLATE' });
+        });
+    }).then(buffer => {
+        fs.writeFileSync(pptxPath, buffer);
+    });
+}
+
 function generatePptxForTheme(themeKey, outFile) {
     const theme = THEMES[themeKey];
     const pres = new pptxgen();
@@ -2466,7 +2491,7 @@ function generatePptxForTheme(themeKey, outFile) {
         }
 });
     
-    return pres.writeFile({ fileName: outFile });
+    return pres.writeFile({ fileName: outFile }).then(() => addCjkFont(outFile));
 }
 
 let slidesDataParsed = [];
