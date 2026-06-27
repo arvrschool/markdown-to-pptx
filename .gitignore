@@ -1,1 +1,13 @@
 scripts/node_modules/
+
+# macOS / editor cruft
+.DS_Store
+
+# generated presentation outputs (regenerable)
+/output.html
+/output*.pptx
+
+# per-document AIGC output workspaces (decks + figures + generated pptx/html)
+/pointaction_cyberpunk/
+/pointaction_ghibli/
+/wam4d_ghibli/

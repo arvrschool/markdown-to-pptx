@@ -1,0 +1,135 @@
+{
+  "slides": [
+    {
+      "slideIndex": 0,
+      "layoutType": "title",
+      "title": "PointAction",
+      "background": {
+        "image": "ghibli_template.jpg",
+        "fallbackColor": "#1E293B"
+      },
+      "elements": [
+        {
+          "type": "text",
+          "content": "**PointAction**\n3D Points as Universal Action Representations",
+          "style": { "fontSize": 48, "fontWeight": "bold", "color": "text-main", "align": "center", "valign": "middle" },
+          "bounds": { "x": "10%", "y": "55%", "w": "30%", "h": "25%" }
+        },
+        {
+          "type": "card",
+          "id": "INTRO",
+          "style": { "theme": "accent" },
+          "content": {
+            "title": "Objective",
+            "body": "Bridge Video Generation & Robot Control via 4D Point Modeling"
+          },
+          "bounds": { "x": "60%", "y": "15%", "w": "30%", "h": "20%" }
+        }
+      ]
+    },
+    {
+      "slideIndex": 1,
+      "layoutType": "custom-cards",
+      "title": "Core Insight: Solving Metric Ambiguity",
+      "background": {
+        "image": "ghibli_template.jpg",
+        "fallbackColor": "#1E293B"
+      },
+      "elements": [
+        {
+          "type": "text",
+          "content": "**The Problem with RGB-only Videos**",
+          "style": { "fontSize": 32, "fontWeight": "bold", "color": "text-main", "align": "center", "valign": "middle" },
+          "bounds": { "x": "5%", "y": "50%", "w": "40%", "h": "35%" }
+        },
+        {
+          "type": "card",
+          "id": "INSIGHT_1",
+          "style": { "theme": "default" },
+          "content": {
+            "title": "Ambiguity in RGB",
+            "body": "RGB-only videos leave metric 3D motion and contact geometry under-specified."
+          },
+          "bounds": { "x": "55%", "y": "15%", "w": "35%", "h": "22%" }
+        },
+        {
+          "type": "card",
+          "id": "INSIGHT_2",
+          "style": { "theme": "accent" },
+          "content": {
+            "title": "The Solution: 3D Pointmaps",
+            "body": "XYZ pointmaps provide explicit spatial constraints, acting as an embodiment-agnostic interface."
+          },
+          "bounds": { "x": "50%", "y": "42%", "w": "35%", "h": "22%" }
+        }
+      ]
+    },
+    {
+      "slideIndex": 2,
+      "layoutType": "timeline",
+      "title": "Two-Stage Architecture",
+      "background": {
+        "image": "ghibli_template.jpg",
+        "fallbackColor": "#1E293B"
+      },
+      "elements": [
+        {
+          "type": "timeline",
+          "content": [
+            { "title": "1. Video-Point Gen", "body": "LVP + LoRA to jointly generate RGB & XYZ pointmaps using WidthConcat." },
+            { "title": "2. Robot Extraction", "body": "Use SAM 3 'robot' prompt to extract robot-centric point trajectories." },
+            { "title": "3. Action Decoder", "body": "PointNet encodes points; conditional DiT decodes to physical actions." }
+          ],
+          "bounds": { "x": "10%", "y": "20%", "w": "80%", "h": "60%" }
+        }
+      ]
+    },
+    {
+      "slideIndex": 3,
+      "layoutType": "custom-cards",
+      "title": "Experimental Results",
+      "background": {
+        "image": "ghibli_template.jpg",
+        "fallbackColor": "#1E293B"
+      },
+      "elements": [
+        {
+          "type": "text",
+          "content": "**Superior Performance**",
+          "style": { "fontSize": 36, "fontWeight": "bold", "color": "text-main", "align": "center", "valign": "middle" },
+          "bounds": { "x": "10%", "y": "55%", "w": "30%", "h": "25%" }
+        },
+        {
+          "type": "card",
+          "id": "RES_SIM",
+          "style": { "theme": "default" },
+          "content": {
+            "title": "Simulation (15 Tasks)",
+            "body": "Average Success Rate: 47.7% (ID), surpassing GR00T N1.7 (44.5%) and π0.5."
+          },
+          "bounds": { "x": "55%", "y": "15%", "w": "35%", "h": "20%" }
+        },
+        {
+          "type": "card",
+          "id": "RES_CROSS",
+          "style": { "theme": "default" },
+          "content": {
+            "title": "Zero-Shot OOD",
+            "body": "OOD-Task 17.0%, doubling the performance of baseline models."
+          },
+          "bounds": { "x": "50%", "y": "40%", "w": "35%", "h": "20%" }
+        },
+        {
+          "type": "card",
+          "id": "RES_REAL",
+          "style": { "theme": "accent" },
+          "content": {
+            "title": "Cross-Embodiment",
+            "body": "Successfully transferred to unseen xArm7 and YAM arm with just 20-50 finetuning trajectories."
+          },
+          "bounds": { "x": "55%", "y": "65%", "w": "35%", "h": "20%" }
+        }
+      ]
+    }
+  ]
+}

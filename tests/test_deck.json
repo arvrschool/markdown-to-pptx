@@ -1,0 +1,644 @@
+{
+  "slides": [
+    {
+      "slideIndex": 0,
+      "layoutType": "title",
+      "background": {
+        "image": "spatial_bg_slide_0.jpg",
+        "fallbackColor": "#060E11"
+      },
+      "elements": [
+        {
+          "id": "radar_decor",
+          "type": "vector",
+          "name": "radar-sweep",
+          "bounds": {
+            "x": "10%",
+            "y": "15%",
+            "w": "35%",
+            "h": "70%"
+          }
+        },
+        {
+          "id": "title_card",
+          "type": "card",
+          "bounds": {
+            "x": "18%",
+            "y": "30%",
+            "w": "20%",
+            "h": "40%"
+          },
+          "style": {
+            "theme": "accent",
+            "borderRadius": "large"
+          },
+          "content": {
+            "title": "ABot-N0",
+            "body": "VLA Foundation Model for Versatile Embodied Navigation"
+          }
+        },
+        {
+          "id": "meta_card_1",
+          "type": "card",
+          "bounds": {
+            "x": "55%",
+            "y": "15%",
+            "w": "35%",
+            "h": "20%"
+          },
+          "style": {
+            "theme": "subtle",
+            "borderRadius": "medium"
+          },
+          "content": {
+            "title": "COGNITIVE CELL",
+            "body": "AMAP CV Lab (Alibaba)"
+          }
+        },
+        {
+          "id": "meta_card_2",
+          "type": "card",
+          "bounds": {
+            "x": "55%",
+            "y": "40%",
+            "w": "35%",
+            "h": "20%"
+          },
+          "style": {
+            "theme": "subtle",
+            "borderRadius": "medium"
+          },
+          "content": {
+            "title": "RELEASE TIMELINE",
+            "body": "June 2026"
+          }
+        },
+        {
+          "id": "meta_card_3",
+          "type": "card",
+          "bounds": {
+            "x": "55%",
+            "y": "65%",
+            "w": "35%",
+            "h": "20%"
+          },
+          "style": {
+            "theme": "subtle",
+            "borderRadius": "medium"
+          },
+          "content": {
+            "title": "SECTOR ACCESS",
+            "body": "PUBLIC TECHNICAL REPORT"
+          }
+        }
+      ],
+      "title": "ABot-N0: Versatile Embodied Navigation"
+    },
+    {
+      "slideIndex": 1,
+      "layoutType": "radar-sweep",
+      "background": {
+        "image": "spatial_bg_slide_1.jpg",
+        "fallbackColor": "#060E11"
+      },
+      "elements": [
+        {
+          "id": "radar_circle",
+          "type": "vector",
+          "name": "radar-sweep",
+          "bounds": {
+            "x": "10%",
+            "y": "20%",
+            "w": "40%",
+            "h": "65%"
+          }
+        },
+        {
+          "id": "nav_tasks_panel",
+          "type": "card",
+          "bounds": {
+            "x": "55%",
+            "y": "18%",
+            "w": "38%",
+            "h": "68%"
+          },
+          "style": {
+            "theme": "default",
+            "borderRadius": "large"
+          },
+          "content": {
+            "title": "具身导航大一统",
+            "body": "ABot-N0 是首个在一个统一的 Vision-Language-Action (VLA) 基础模型中实现 Point-Goal、Object-Goal、Instruction-Following、POI-Goal 和 Person-Following 五大核心具身导航任务的系统，打破了以往各任务需专用架构的碎片化范式。"
+          }
+        }
+      ],
+      "title": "多任务大一统具身导航基础模型"
+    },
+    {
+      "slideIndex": 2,
+      "layoutType": "grid-2x2",
+      "background": {
+        "image": "spatial_bg_slide_2.jpg",
+        "fallbackColor": "#060E11"
+      },
+      "elements": [
+        {
+          "id": "card_task",
+          "type": "card",
+          "bounds": {
+            "x": "6%",
+            "y": "22%",
+            "w": "33%",
+            "h": "32%"
+          },
+          "style": {
+            "theme": "default",
+            "borderRadius": "medium"
+          },
+          "content": {
+            "title": "五任务大一统",
+            "body": "首次在单一模型中融合五大导航任务，提供通用的多模态导航接口。"
+          }
+        },
+        {
+          "id": "card_brain",
+          "type": "card",
+          "bounds": {
+            "x": "6%",
+            "y": "58%",
+            "w": "33%",
+            "h": "32%"
+          },
+          "style": {
+            "theme": "default",
+            "borderRadius": "medium"
+          },
+          "content": {
+            "title": "Brain-Action 架构",
+            "body": "采用 LLM 负责高层语义推理，Flow Matching 作为 Action Expert 生成精确轨迹。"
+          }
+        },
+        {
+          "id": "sphere_center",
+          "type": "vector",
+          "name": "spatial-sphere",
+          "bounds": {
+            "x": "44%",
+            "y": "30%",
+            "w": "12%",
+            "h": "50%"
+          }
+        },
+        {
+          "id": "card_data",
+          "type": "card",
+          "bounds": {
+            "x": "61%",
+            "y": "22%",
+            "w": "33%",
+            "h": "32%"
+          },
+          "style": {
+            "theme": "default",
+            "borderRadius": "medium"
+          },
+          "content": {
+            "title": "超大规模数据引擎",
+            "body": "包含 16.9M 专家轨迹和 5.0M 推理样本，覆盖室内外多种复杂场景。"
+          }
+        },
+        {
+          "id": "card_robot",
+          "type": "card",
+          "bounds": {
+            "x": "61%",
+            "y": "58%",
+            "w": "33%",
+            "h": "32%"
+          },
+          "style": {
+            "theme": "default",
+            "borderRadius": "medium"
+          },
+          "content": {
+            "title": "物理真机部署验证",
+            "body": "在 Unitree Go2 四足机器人上实现 2Hz VLA 推理与 10Hz+ 闭环控制，支持长程鲁棒导航。"
+          }
+        }
+      ],
+      "title": "核心技术优势与架构创新"
+    },
+    {
+      "slideIndex": 3,
+      "layoutType": "split-image",
+      "background": {
+        "image": "spatial_bg_slide_3.jpg",
+        "fallbackColor": "#060E11"
+      },
+      "elements": [
+        {
+          "id": "brain_action_desc",
+          "type": "card",
+          "bounds": {
+            "x": "6%",
+            "y": "22%",
+            "w": "40%",
+            "h": "68%"
+          },
+          "style": {
+            "theme": "default",
+            "borderRadius": "large"
+          },
+          "content": {
+            "title": "层次化 Brain-Action 架构",
+            "body": "- **Universal Multi-Modal Encoder**: 统一异构输入，支持全景 RGB、历史帧记忆与导航目标规格的联合编码。\n- **Cognitive Brain (LLM)**: 双头设计，Reasoning Head 输出语言理解与 CoT 推理，Action Head 输出运动隐式潜变量 $z_a$。\n- **Action Expert (Flow Matching)**: 接收潜变量 $z_a$，基于 Flow Matching 建模连续轨迹分布，生成平滑连续的 waypoint 序列。"
+          }
+        },
+        {
+          "id": "architecture_visual",
+          "type": "image",
+          "bounds": {
+            "x": "51%",
+            "y": "22%",
+            "w": "43%",
+            "h": "68%"
+          },
+          "content": {
+            "path": "../assets/abot-n0/robonavi_architecture.jpg"
+          }
+        },
+        {
+          "id": "viewfinder_overlay",
+          "type": "vector",
+          "name": "viewfinder-reticle",
+          "bounds": {
+            "x": "51%",
+            "y": "22%",
+            "w": "43%",
+            "h": "68%"
+          }
+        }
+      ],
+      "title": "层次化 Brain-Action 架构设计"
+    },
+    {
+      "slideIndex": 4,
+      "layoutType": "centered-breathe",
+      "background": {
+        "image": "spatial_bg_slide_4.jpg",
+        "fallbackColor": "#060E11"
+      },
+      "elements": [
+        {
+          "id": "loss_function_card",
+          "type": "card",
+          "bounds": {
+            "x": "24%",
+            "y": "25%",
+            "w": "52%",
+            "h": "55%"
+          },
+          "style": {
+            "theme": "accent",
+            "borderRadius": "large"
+          },
+          "content": {
+            "title": "Phase 2 联合训练损失函数",
+            "body": "ABot-N0 采用联合优化策略，同时微调 LLM 的 NTP loss 与 Action Expert 的 CFM 损失函数：\n\n$L_{Phase2} = λ_{txt} · L_{NTP}(θ_{brain}) + λ_{flow} · L_{CFM}(θ_{action} | θ_{brain})$\n\n混合训练策略中掺入约 20% 的推理数据回放，在预测行动的同时保持认知推理能力。"
+          }
+        }
+      ],
+      "title": "Phase 2 联合训练损失函数"
+    },
+    {
+      "slideIndex": 5,
+      "layoutType": "timeline",
+      "background": {
+        "image": "spatial_bg_slide_5.jpg",
+        "fallbackColor": "#060E11"
+      },
+      "elements": [
+        {
+          "id": "timeline_line",
+          "type": "vector",
+          "name": "timeline-pulse",
+          "bounds": {
+            "x": "8%",
+            "y": "28%",
+            "w": "84%",
+            "h": "2%"
+          }
+        },
+        {
+          "id": "timeline_steps",
+          "type": "timeline",
+          "bounds": {
+            "x": "6%",
+            "y": "35%",
+            "w": "88%",
+            "h": "50%"
+          },
+          "content": [
+            {
+              "title": "指令分解 (VLM Planner)",
+              "body": "利用 VLM Planner 将复杂的长程自然语言指令，自适应分解为 Point-Goal 粗定位到 Object/POI-Goal 精定位的子任务序列。"
+            },
+            {
+              "title": "闭环监控 (Self-Reflector)",
+              "body": "实时跟踪物理世界状态与子任务执行情况，在任务失败时输出自然语言反馈，触发 Planner 重新规划。"
+            },
+            {
+              "title": "控制执行 (Neural Controller)",
+              "body": "基于 CE-Nav 与 VelFlow 归一化流，以 10Hz+ 的频率将 2Hz VLA 高层 waypoints 转化为动力学可行的物理速度指令 $(v_x, v_y, v_{yaw})$。"
+            }
+          ]
+        }
+      ],
+      "title": "机器人混合自适应时空调度机制"
+    },
+    {
+      "slideIndex": 6,
+      "layoutType": "grid-2x2",
+      "background": {
+        "image": "spatial_bg_slide_6.jpg",
+        "fallbackColor": "#060E11"
+      },
+      "elements": [
+        {
+          "id": "card_pt",
+          "type": "card",
+          "bounds": {
+            "x": "6%",
+            "y": "22%",
+            "w": "33%",
+            "h": "32%"
+          },
+          "style": {
+            "theme": "default",
+            "borderRadius": "medium"
+          },
+          "content": {
+            "title": "Point-Goal (4.0M)",
+            "body": "结合互联网第一人称视频 3DGS 重建、Habitat 仿真可达点对 A* 规划和真实机器人遥操作物理轨迹。"
+          }
+        },
+        {
+          "id": "card_inst",
+          "type": "card",
+          "bounds": {
+            "x": "6%",
+            "y": "58%",
+            "w": "33%",
+            "h": "32%"
+          },
+          "style": {
+            "theme": "default",
+            "borderRadius": "medium"
+          },
+          "content": {
+            "title": "Instruction-Following (2.8M)",
+            "body": "涵盖 VLN-CE、门通道多样化穿越、语言引导的多目标搜索以及精细短程原子动作序列。"
+          }
+        },
+        {
+          "id": "multiview_scan",
+          "type": "vector",
+          "name": "multiview-diagnostic",
+          "bounds": {
+            "x": "44%",
+            "y": "30%",
+            "w": "12%",
+            "h": "50%"
+          }
+        },
+        {
+          "id": "card_obj",
+          "type": "card",
+          "bounds": {
+            "x": "61%",
+            "y": "22%",
+            "w": "33%",
+            "h": "32%"
+          },
+          "style": {
+            "theme": "default",
+            "borderRadius": "medium"
+          },
+          "content": {
+            "title": "Object-Goal (3.6M)",
+            "body": "混合 HM3D、OVON 开放词汇数据集及 InteriorGS 数据，专注视角的视觉-语义及空间结构对齐。"
+          }
+        },
+        {
+          "id": "card_poi",
+          "type": "card",
+          "bounds": {
+            "x": "61%",
+            "y": "58%",
+            "w": "33%",
+            "h": "32%"
+          },
+          "style": {
+            "theme": "default",
+            "borderRadius": "medium"
+          },
+          "content": {
+            "title": "POI-Goal & Person-Following",
+            "body": "Wan2.1 视频扩散生成 POI 轨迹 2.5M；结合 3DGS 人体 avatar 姿态生成 4.0M 二维和三维距离的追踪样本。"
+          }
+        }
+      ],
+      "title": "多模态导航数据集任务分布"
+    },
+    {
+      "slideIndex": 7,
+      "layoutType": "comparison-ledger",
+      "background": {
+        "image": "spatial_bg_slide_7.jpg",
+        "fallbackColor": "#060E11"
+      },
+      "elements": [
+        {
+          "id": "benchmark_list",
+          "type": "vector",
+          "name": "comparison-ledger",
+          "bounds": {
+            "x": "6%",
+            "y": "22%",
+            "w": "88%",
+            "h": "68%"
+          }
+        },
+        {
+          "id": "metric_1",
+          "type": "card",
+          "bounds": {
+            "x": "8%",
+            "y": "25%",
+            "w": "19%",
+            "h": "60%"
+          },
+          "style": {
+            "theme": "subtle"
+          },
+          "content": {
+            "title": "Point-Goal (88.3%)",
+            "body": "开环 MAOE 达 6.3 领先，SocNav 闭环成功率 88.3%，社会合规避障强。"
+          }
+        },
+        {
+          "id": "metric_2",
+          "type": "card",
+          "bounds": {
+            "x": "30%",
+            "y": "25%",
+            "w": "19%",
+            "h": "60%"
+          },
+          "style": {
+            "theme": "subtle"
+          },
+          "content": {
+            "title": "Instruction (69.3%)",
+            "body": "R2R-CE Val-Unseen 成功率 66.4%（+4.7%），RxR-CE 成功率 69.3%。"
+          }
+        },
+        {
+          "id": "metric_3",
+          "type": "card",
+          "bounds": {
+            "x": "52%",
+            "y": "25%",
+            "w": "19%",
+            "h": "60%"
+          },
+          "style": {
+            "theme": "subtle"
+          },
+          "content": {
+            "title": "Object-Goal (54.0%)",
+            "body": "Val-Unseen 成功率 54.0%，仅全景 RGB 无深度输入即超越专用传感器模型。"
+          }
+        },
+        {
+          "id": "metric_4",
+          "type": "card",
+          "bounds": {
+            "x": "74%",
+            "y": "25%",
+            "w": "19%",
+            "h": "60%"
+          },
+          "style": {
+            "theme": "accent"
+          },
+          "content": {
+            "title": "Person-Follow (86.9%)",
+            "body": "EVT 追踪成功率 86.9%，遮挡追踪达 67.3%，表现卓越稳定。"
+          }
+        }
+      ],
+      "title": "实体真机部署与性能指标评测"
+    },
+    {
+      "slideIndex": 8,
+      "layoutType": "split-image",
+      "background": {
+        "image": "spatial_bg_slide_8.jpg",
+        "fallbackColor": "#060E11"
+      },
+      "elements": [
+        {
+          "id": "go2_deployment_desc",
+          "type": "card",
+          "bounds": {
+            "x": "6%",
+            "y": "22%",
+            "w": "40%",
+            "h": "68%"
+          },
+          "style": {
+            "theme": "default",
+            "borderRadius": "large"
+          },
+          "content": {
+            "title": "Unitree Go2 真机部署",
+            "body": "- **硬件集成与配置**: Jetson Orin NX 搭载 3×RGB 相机提供全景环视（使用 view-specific token 处理防止拼接几何畸变），搭载 4D LiDAR 及 RTK-GNSS 辅助。\n- **2Hz VLA 高层推理**: LLM 双头推理出场景理解（可导航多边形）及动作潜变量，Action Expert 预测 waypoints。\n- **10Hz 闭环物理控制**: 神经网络控制器实时响应 waypoint，克服机械腿的动力学约束并输出平滑轮廓的速度。"
+          }
+        },
+        {
+          "id": "go2_visual",
+          "type": "image",
+          "bounds": {
+            "x": "51%",
+            "y": "22%",
+            "w": "43%",
+            "h": "68%"
+          },
+          "content": {
+            "path": "../assets/abot-n0/robot_detail.png"
+          }
+        },
+        {
+          "id": "go2_reticle",
+          "type": "vector",
+          "name": "viewfinder-reticle",
+          "bounds": {
+            "x": "51%",
+            "y": "22%",
+            "w": "43%",
+            "h": "68%"
+          }
+        }
+      ],
+      "title": "基于 Unitree Go2 的物理真机闭环验证"
+    },
+    {
+      "slideIndex": 9,
+      "layoutType": "comparison-ledger",
+      "background": {
+        "image": "spatial_bg_slide_9.jpg",
+        "fallbackColor": "#060E11"
+      },
+      "elements": [
+        {
+          "id": "trackvla_card",
+          "type": "card",
+          "bounds": {
+            "x": "6%",
+            "y": "22%",
+            "w": "42%",
+            "h": "68%"
+          },
+          "style": {
+            "theme": "subtle",
+            "borderRadius": "large"
+          },
+          "content": {
+            "title": "TrackVLA Paradigm (MLP Limits)",
+            "body": "- **输出机制**: 采用 MLP 确定性回归生成 8 waypoints 坐标。\n- **大脑推理**: 大脑 LLM 负责整个频繁控制回路，带来极大计算开销。\n- **路径平滑度**: MLP 直连输出坐标容易产生关节的高频抖动。\n- **适用频段**: 针对 30 FPS 高频实时指令设计，难以应对宏观长距离导航。"
+          }
+        },
+        {
+          "id": "abot_card",
+          "type": "card",
+          "bounds": {
+            "x": "52%",
+            "y": "22%",
+            "w": "42%",
+            "h": "68%"
+          },
+          "style": {
+            "theme": "accent",
+            "borderRadius": "large"
+          },
+          "content": {
+            "title": "ABot-N0 Paradigm (Flow Matching)",
+            "body": "- **输出机制**: 采用 Flow Matching 概率流生成，提供连续性平滑高维轨迹建模。\n- **大脑推理**: 模型大脑只输出高层决策与意图潜变量，控制与执行解耦。\n- **路径平滑度**: 基于流匹配技术天然平滑连续，机械狗行走极度稳定。\n- **适用频段**: 采用 2Hz 低频长期规划与 10Hz 实时速度转化结合方案。"
+          }
+        }
+      ],
+      "title": "动作输出范式对比：MLP vs Flow Matching"
+    }
+  ]
+}
