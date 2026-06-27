@@ -20,11 +20,12 @@
 #### 2. 其他预置全局主题效果（极简浅色、科技深色、优雅沙滩、清新森林等）：
 ![预置全局主题效果](assets/themes_preview.jpg)
 
-#### 3. AIGC 动态主题演示 (赛博朋克 · 吉卜力动漫)：
-| 赛博朋克 HUD 终端 | 吉卜力水彩动漫 |
-|:---:|:---:|
-| ![赛博朋克演示](assets/cyberpunk_demo.gif) | ![吉卜力演示](assets/ghibli_demo.gif) |
-| *高密度不对称霓虹 HUD 卡片* | *手绘水彩羊皮纸卡片·草地蓝天背景* |
+#### 3. AIGC 动态主题演示 (概念底图 → 生成效果)：
+| | **赛博朋克** | **吉卜力** |
+|:---|:---:|:---:|
+| **概念底图** | ![赛博朋克概念图](assets/cyberpunk_bg.jpg) | ![吉卜力概念图](assets/ghibli_template.jpg) |
+| **生成效果** | ![赛博朋克演示](assets/cyberpunk_demo.gif) | ![吉卜力演示](assets/ghibli_demo.gif) |
+| *风格* | 高密度不对称霓虹 HUD 卡片 | 手绘水彩羊皮纸卡片·草地蓝天背景 |
 
 ---
 

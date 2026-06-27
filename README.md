@@ -20,11 +20,12 @@ It is also fully compatible as a **Google Antigravity Custom Skill**, enabling y
 #### 2. Precompiled Global Themes (Minimalist Light, Cyber Dark, Warm Editorial, Sage Forest, etc.):
 ![Precompiled Themes Grid](assets/themes_preview.jpg)
 
-#### 3. AIGC Dynamic Theme Demos (Cyberpunk · Ghibli Anime):
-| Cyberpunk HUD Terminal | Ghibli Watercolor Anime |
-|:---:|:---:|
-| ![Cyberpunk Demo](assets/cyberpunk_demo.gif) | ![Ghibli Demo](assets/ghibli_demo.gif) |
-| *High-density asymmetric neon HUD cards* | *Hand-drawn parchment cards on meadow scenery* |
+#### 3. AIGC Dynamic Theme Demos (Concept Template → Generated Slides):
+| | **Cyberpunk** | **Ghibli** |
+|:---|:---:|:---:|
+| **Concept Mockup** | ![Cyberpunk Concept](assets/cyberpunk_bg.jpg) | ![Ghibli Concept](assets/ghibli_template.jpg) |
+| **Generated Effect** | ![Cyberpunk Demo](assets/cyberpunk_demo.gif) | ![Ghibli Demo](assets/ghibli_demo.gif) |
+| *Style* | High-density asymmetric neon HUD cards | Hand-drawn parchment cards on meadow scenery |
 
 ---
 
