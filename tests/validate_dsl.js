@@ -4,7 +4,7 @@ const path = require('path');
 /**
  * Validates a single slide DSL object
  */
-function validateSlideDsl(slide, slideIdx) {
+function validateSlideDsl(slide, slideIdx, baseDir) {
     const errors = [];
     
     if (typeof slide !== 'object' || slide === null) {
@@ -59,6 +59,15 @@ function validateSlideDsl(slide, slideIdx) {
                     }
                 }
             });
+            // Overflow check: element extending beyond slide edge (>100.5% to allow floating rounding)
+            const _xe = parseFloat(el.bounds.x), _ye = parseFloat(el.bounds.y);
+            const _we = parseFloat(el.bounds.w), _he = parseFloat(el.bounds.h);
+            if (!isNaN(_xe) && !isNaN(_we) && _xe + _we > 100.5) {
+                errors.push(`${pathPrefix}: extends beyond right slide edge (x=${el.bounds.x} + w=${el.bounds.w} = ${(_xe+_we).toFixed(1)}% > 100%).`);
+            }
+            if (!isNaN(_ye) && !isNaN(_he) && _ye + _he > 100.5) {
+                errors.push(`${pathPrefix}: extends beyond bottom slide edge (y=${el.bounds.y} + h=${el.bounds.h} = ${(_ye+_he).toFixed(1)}% > 100%).`);
+            }
         }
         
         // Type-specific validations
@@ -80,6 +89,14 @@ function validateSlideDsl(slide, slideIdx) {
         } else if (el.type === 'image') {
             if (!el.content || typeof el.content.path !== 'string') {
                 errors.push(`${pathPrefix}: image elements must have content.path string.`);
+            } else if (baseDir) {
+                const imgPath = path.isAbsolute(el.content.path) ? el.content.path : path.resolve(baseDir, el.content.path);
+                if (!fs.existsSync(imgPath)) {
+                    errors.push(`${pathPrefix}: image file not found: "${el.content.path}" (resolved to ${imgPath}).`);
+                }
+            }
+            if (el.content.alt !== undefined && typeof el.content.alt !== 'string') {
+                errors.push(`${pathPrefix}: image.content.alt must be a string if provided.`);
             }
         } else if (el.type === 'vector') {
             if (typeof el.name !== 'string') {
@@ -104,14 +121,14 @@ function validateSlideDsl(slide, slideIdx) {
 /**
  * Validates a full deck JSON representation
  */
-function validateDeck(deck) {
+function validateDeck(deck, baseDir) {
     const errors = [];
     if (typeof deck !== 'object' || deck === null || !Array.isArray(deck.slides)) {
         return ["Deck must contain a 'slides' array at root."];
     }
     
     deck.slides.forEach((slide, idx) => {
-        const slideErrors = validateSlideDsl(slide, idx);
+        const slideErrors = validateSlideDsl(slide, idx, baseDir);
         errors.push(...slideErrors);
     });
     
@@ -129,7 +146,7 @@ if (require.main === module) {
     try {
         const fileContent = fs.readFileSync(args[0], 'utf-8');
         const json = JSON.parse(fileContent);
-        const errors = validateDeck(json);
+        const errors = validateDeck(json, path.dirname(args[0]));
         
         if (errors.length > 0) {
             console.error("❌ DSL Validation Failed:");

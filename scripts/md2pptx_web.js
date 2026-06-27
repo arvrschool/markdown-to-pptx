@@ -29,7 +29,7 @@ if (inputFile.endsWith('.json')) {
     try {
         const deck = JSON.parse(mdText);
         const { validateDeck } = require('../tests/validate_dsl.js');
-        const errors = validateDeck(deck);
+        const errors = validateDeck(deck, path.dirname(inputFile));
         if (errors.length > 0) {
             console.error("❌ DSL Validation Failed:");
             errors.forEach(err => console.error("  - " + err));
@@ -615,8 +615,11 @@ function renderSlideListHtml(slidesList, globalSlidesData) {
                         <div class="premium-card-body" style="font-size: 10pt; line-height: 1.35; overflow: hidden; color: var(--text-main);">${formatMarkdownTokens(el.content.body || '')}</div>
                     </div>\n`;
                 } else if (el.type === 'image') {
-                    content += `                    <div class="image-card-frame" style="${posStyle}">
-                        <img src="${el.content.path}" style="width: 100%; height: 100%; object-fit: contain;">
+                    content += `                    <div class="image-card-frame" style="${posStyle} display: flex; flex-direction: column;">
+                        <div style="flex: 1; display: flex; align-items: center; justify-content: center; overflow: hidden;">
+                            <img src="${el.content.path}" style="width: 100%; height: 100%; object-fit: contain;">
+                        </div>
+                        ${el.content.alt ? `<div style="font-size: 9pt; font-style: italic; text-align: center; color: var(--text-color); padding: 2px 6px; border-top: 1px solid var(--card-border);">${escapeHtml(el.content.alt)}</div>` : ''}
                     </div>\n`;
                 } else if (el.type === 'vector') {
                     if (el.name === 'radar-sweep') {
@@ -1850,12 +1853,23 @@ function generatePptxForTheme(themeKey, outFile) {
                         imgPath = path.resolve(path.dirname(inputFile), imgPath);
                     }
                     if (fs.existsSync(imgPath)) {
+                        const altH = el.content.alt ? 0.28 : 0;
                         slide.addImage({
                             path: imgPath,
                             x: x_inch + 0.05, y: y_inch + 0.05,
-                            w: w_inch - 0.1, h: h_inch - 0.1,
+                            w: w_inch - 0.1, h: h_inch - 0.1 - altH,
                             sizing: { type: 'contain' }
                         });
+                        if (el.content.alt) {
+                            slide.addText(el.content.alt, {
+                                x: x_inch + 0.05, y: y_inch + h_inch - altH - 0.02,
+                                w: w_inch - 0.1, h: altH,
+                                fontSize: 9, italic: true, color: theme.textColor,
+                                fontFace: theme.fontFace,
+                                align: "center", valign: "middle",
+                                margin: 0
+                            });
+                        }
                     }
                 } else if (el.type === 'vector') {
                     if (el.name === 'radar-sweep') {
