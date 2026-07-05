@@ -520,7 +520,8 @@ function segmentsToHtml(segments) {
 function renderSlideListHtml(slidesList, globalSlidesData) {
     let content = "";
     slidesList.forEach((data, idx) => {
-        content += `        <div class="slide-item">
+        const activeClass = idx === 0 ? " active" : "";
+        content += `        <div class="slide-item${activeClass}">
             <div class="slide-frame">
 `;
         if (data.isDsl) {
@@ -679,6 +680,45 @@ function renderSlideListHtml(slidesList, globalSlidesData) {
                                 </div>
                             </div>
                         </div>\n`;
+                    }
+                } else if (el.type === 'decoration') {
+                    const decType = el.name;
+                    const fillHex = (el.style?.fill || '#FFFFFF').replace('#', '');
+                    const opacity = el.style?.opacity !== undefined ? el.style.opacity : 0.15;
+                    
+                    if (decType === 'circle-ring') {
+                        content += `                    <div style="${posStyle} display: flex; align-items: center; justify-content: center; opacity: ${opacity}; pointer-events: none;">
+                            <svg viewBox="0 0 100 100" style="width: 100%; height: 100%;">
+                                <circle cx="50" cy="50" r="45" fill="none" stroke="#${fillHex}" stroke-width="2" />
+                                <circle cx="50" cy="50" r="35" fill="none" stroke="#${fillHex}" stroke-width="1" opacity="0.6" />
+                            </svg>
+                        </div>\n`;
+                    }
+                    else if (decType === 'hexagons') {
+                        content += `                    <div style="${posStyle} opacity: ${opacity}; pointer-events: none;">
+                            <svg viewBox="0 0 100 100" style="width: 100%; height: 100%;">
+                                <polygon points="50,5 90,25 90,75 50,95 10,75 10,25" fill="none" stroke="#${fillHex}" stroke-width="1.5" />
+                                <polygon points="50,20 80,35 80,65 50,80 20,65 20,35" fill="none" stroke="#${fillHex}" stroke-width="1" opacity="0.6"/>
+                            </svg>
+                        </div>\n`;
+                    }
+                    else if (decType === 'glow-spot') {
+                        content += `                    <div style="${posStyle} background: radial-gradient(circle, #${fillHex} 0%, rgba(255,255,255,0) 70%); opacity: ${opacity}; pointer-events: none; filter: blur(5px);"></div>\n`;
+                    }
+                    else if (decType === 'diagonal-split') {
+                        content += `                    <div style="${posStyle} background: #${fillHex}; opacity: ${opacity}; clip-path: polygon(0 0, 100% 0, 0 100%); pointer-events: none;"></div>\n`;
+                    }
+                    else if (decType === 'cross-marker') {
+                        content += `                    <div style="${posStyle} display: flex; align-items: center; justify-content: center; opacity: ${opacity}; pointer-events: none;">
+                            <svg viewBox="0 0 20 20" style="width: 100%; height: 100%;">
+                                <line x1="10" y1="0" x2="10" y2="20" stroke="#${fillHex}" stroke-width="1" />
+                                <line x1="0" y1="10" x2="20" y2="10" stroke="#${fillHex}" stroke-width="1" />
+                            </svg>
+                        </div>\n`;
+                    }
+                    else if (decType === 'separator') {
+                        const dash = el.style?.dashType === 'dash' ? 'dashed' : 'solid';
+                        content += `                    <div style="${posStyle} border-bottom: 1.2px ${dash} #${fillHex}; opacity: ${opacity}; pointer-events: none; height: 1px;"></div>\n`;
                     }
                 } else if (el.type === 'timeline') {
                     const numCards = el.content.length;
@@ -1280,25 +1320,46 @@ function generateHtmlPreview(slidesData, pptxPath, themeMode = "all") {
         }
         
         body {
-            background-color: #202124;
+            background-color: #08090d;
             color: #e8eaed;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
             margin: 0;
-            padding: 80px 20px 20px 20px;
+            padding: 0;
+            overflow: hidden;
             display: flex;
-            flex-direction: column;
             align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            width: 100vw;
             transition: background-color 0.3s;
         }
         h1 {
-            font-size: 24px;
-            margin-bottom: 20px;
+            display: none;
+        }
+        .deck-shell {
+            position: fixed;
+            inset: 0;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            pointer-events: none;
+        }
+        .deck-stage {
+            width: 13.333in;
+            height: 7.5in;
+            position: relative;
+            transform-origin: center center;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.4);
+            background-color: var(--bg-color);
+            pointer-events: auto;
         }
         .slides-container {
-            display: flex;
-            flex-direction: column;
-            gap: 40px;
-            width: 13.333in;
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            display: block;
         }
         .slide-frame {
             background-color: var(--bg-color);
@@ -1307,22 +1368,31 @@ function generateHtmlPreview(slidesData, pptxPath, themeMode = "all") {
             width: 13.333in;
             height: 7.5in;
             position: relative;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-            border-radius: 4px;
             overflow: hidden;
             box-sizing: border-box;
             transition: background-color 0.3s, color 0.3s;
         }
         .slide-num {
-            color: #9aa0a6;
-            font-size: 14px;
-            margin-top: 8px;
-            align-self: flex-start;
+            display: none;
         }
         .slide-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            position: absolute;
+            inset: 0;
+            display: none;
+            width: 100%;
+            height: 100%;
+        }
+        .slide-item.active {
+            display: block !important;
+        }
+        
+        @media print {
+            body { background: white !important; overflow: visible !important; display: block !important; min-height: auto !important; width: auto !important; }
+            .deck-shell { position: relative !important; inset: auto !important; display: block !important; pointer-events: auto !important; }
+            .deck-stage { transform: none !important; box-shadow: none !important; width: 13.333in !important; height: 7.5in !important; position: relative !important; }
+            .slides-container { position: relative !important; width: 13.333in !important; height: auto !important; display: block !important; }
+            .slide-item { display: block !important; position: relative !important; width: 13.333in !important; height: 7.5in !important; page-break-after: always !important; }
+            .toolbar { display: none !important; }
         }
         .text-card {
             background-color: var(--card-bg);
@@ -1445,59 +1515,39 @@ ${themeTokenCss}
 ${themeBgCss}
     </style>
 </head>
-<body>`;
-    htmlContent += `    <h1>Presentation Preview: ${escapeHtml(basePptxName)}</h1>`;
+<body>
+    <div class="deck-shell">
+        <div class="deck-stage" id="stage">`;
     
-    // Check if we have spatial, cyberpunk and holodeck decks
+    // Check for theme-specific DSL decks dynamically
     const inputDir = path.dirname(inputFile);
-    let spatialSlides = null;
-    let cyberpunkSlides = null;
-    let holodeckSlides = null;
+    const targetThemes = themeMode === "all" ? Object.keys(THEMES) : [themeMode];
+    let dslFound = false;
     
-    const spatialPath = path.resolve(inputDir, 'spatial_deck.json');
-    const cyberpunkPath = path.resolve(inputDir, 'cyberpunk_deck.json');
-    const holodeckPath = path.resolve(inputDir, 'holodeck_deck.json');
-    
-    if (fs.existsSync(spatialPath)) {
-        try {
-            spatialSlides = JSON.parse(fs.readFileSync(spatialPath, 'utf-8')).slides;
-            spatialSlides.forEach(s => { s.isDsl = true; s.dsl = s; });
-        } catch(e) {}
-    }
-    if (fs.existsSync(cyberpunkPath)) {
-        try {
-            cyberpunkSlides = JSON.parse(fs.readFileSync(cyberpunkPath, 'utf-8')).slides;
-            cyberpunkSlides.forEach(s => { s.isDsl = true; s.dsl = s; });
-        } catch(e) {}
-    }
-    if (fs.existsSync(holodeckPath)) {
-        try {
-            holodeckSlides = JSON.parse(fs.readFileSync(holodeckPath, 'utf-8')).slides;
-            holodeckSlides.forEach(s => { s.isDsl = true; s.dsl = s; });
-        } catch(e) {}
-    }
+    targetThemes.forEach((tKey, tIdx) => {
+        const dslPath = path.resolve(inputDir, `${tKey}_deck.json`);
+        if (fs.existsSync(dslPath)) {
+            try {
+                const slides = JSON.parse(fs.readFileSync(dslPath, 'utf-8')).slides;
+                slides.forEach(s => { s.isDsl = true; s.dsl = s; });
+                const displayStyle = tIdx === 0 ? "block" : "none";
+                htmlContent += `    <div class="slides-container theme-layout-${tKey}" style="display: ${displayStyle};">\n`;
+                htmlContent += renderSlideListHtml(slides, slidesData);
+                htmlContent += `    </div>\n`;
+                dslFound = true;
+            } catch (e) {
+                console.error(`Failed to parse DSL file for theme ${tKey} in HTML preview:`, e.message);
+            }
+        }
+    });
 
-    if (spatialSlides || cyberpunkSlides || holodeckSlides) {
-        if (spatialSlides) {
-            htmlContent += `    <div class="slides-container theme-layout-spatial" style="display: flex; flex-direction: column; gap: 40px;">\n`;
-            htmlContent += renderSlideListHtml(spatialSlides, slidesData);
-            htmlContent += `    </div>\n`;
-        }
-        if (cyberpunkSlides) {
-            htmlContent += `    <div class="slides-container theme-layout-cyberpunk" style="display: none; flex-direction: column; gap: 40px;">\n`;
-            htmlContent += renderSlideListHtml(cyberpunkSlides, slidesData);
-            htmlContent += `    </div>\n`;
-        }
-        if (holodeckSlides) {
-            htmlContent += `    <div class="slides-container theme-layout-holodeck" style="display: none; flex-direction: column; gap: 40px;">\n`;
-            htmlContent += renderSlideListHtml(holodeckSlides, slidesData);
-            htmlContent += `    </div>\n`;
-        }
-    } else {
-        htmlContent += `    <div class="slides-container theme-layout-default" style="display: flex; flex-direction: column; gap: 40px;">\n`;
+    if (!dslFound) {
+        htmlContent += `    <div class="slides-container theme-layout-default" style="display: block;">\n`;
         htmlContent += renderSlideListHtml(slidesData, slidesData);
         htmlContent += `    </div>\n`;
     }
+    
+    htmlContent += `        </div>\n    </div>\n`;
     
     // Build switcher HTML toolbar
     let switcherHtml = '';
@@ -1507,7 +1557,9 @@ ${themeBgCss}
         <span class="toolbar-title">切换主题预览:</span>
 ${Object.keys(THEMES).map(k => `        <button class="theme-btn" onclick="setTheme('${k}', this)">${THEMES[k].name}</button>`).join('\n')}
         <span style="color: rgba(255,255,255,0.2); margin: 0 5px;">|</span>
-        <span class="toolbar-title">下载对应的 PPTX:</span>
+        <span class="toolbar-title">页码:</span>
+        <span id="slide-counter" class="toolbar-title" style="background: rgba(255,255,255,0.08); padding: 4px 10px; border-radius: 12px; font-family: monospace; color: #FFFFFF;">1 / 1</span>
+        <span style="color: rgba(255,255,255,0.2); margin: 0 5px;">|</span>
         <a id="download-link" href="#" class="theme-btn" style="background: #10B981; color: #FFFFFF; text-decoration: none; display: inline-flex; align-items: center; gap: 5px;" download>
             📥 下载当前版本
         </a>
@@ -1516,6 +1568,40 @@ ${Object.keys(THEMES).map(k => `        <button class="theme-btn" onclick="setTh
     <script>
         const baseName = '${baseNameWithoutExt}';
         const THEME_NAMES = ${JSON.stringify(themeNamesMap)};
+        
+        let currentSlideIdx = 0;
+        let slideItems = [];
+        
+        function updateSlideList() {
+            const containers = Array.from(document.querySelectorAll('.slides-container'));
+            const activeContainer = containers.find(c => c.style.display !== 'none');
+            if (activeContainer) {
+                slideItems = Array.from(activeContainer.querySelectorAll('.slide-item'));
+            } else {
+                slideItems = Array.from(document.querySelectorAll('.slide-item'));
+            }
+            slideItems.forEach((el, i) => {
+                el.classList.toggle('active', i === currentSlideIdx);
+            });
+            updatePageCounter();
+        }
+
+        function showSlide(idx) {
+            if (idx < 0 || idx >= slideItems.length) return;
+            slideItems.forEach((el, i) => {
+                el.classList.toggle('active', i === idx);
+            });
+            currentSlideIdx = idx;
+            updatePageCounter();
+        }
+        
+        function updatePageCounter() {
+            const counterEl = document.getElementById('slide-counter');
+            if (counterEl && slideItems.length > 0) {
+                counterEl.innerText = (currentSlideIdx + 1) + ' / ' + slideItems.length;
+            }
+        }
+        
         function setTheme(theme, btn) {
             document.body.className = 'theme-' + theme;
             document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
@@ -1528,25 +1614,55 @@ ${Object.keys(THEMES).map(k => `        <button class="theme-btn" onclick="setTh
             }
             
             // Toggle layout containers
-            const spatialContainer = document.querySelector('.theme-layout-spatial');
-            const cyberpunkContainer = document.querySelector('.theme-layout-cyberpunk');
-            const holodeckContainer = document.querySelector('.theme-layout-holodeck');
+            const containers = Array.from(document.querySelectorAll('.slides-container'));
+            containers.forEach(c => {
+                c.style.display = c.classList.contains('theme-layout-' + theme) ? 'block' : 'none';
+            });
             
-            if (spatialContainer) spatialContainer.style.display = (theme === 'spatial' || (theme !== 'cyberpunk' && theme !== 'holodeck')) ? 'flex' : 'none';
-            if (cyberpunkContainer) cyberpunkContainer.style.display = (theme === 'cyberpunk') ? 'flex' : 'none';
-            if (holodeckContainer) holodeckContainer.style.display = (theme === 'holodeck') ? 'flex' : 'none';
-            
-            // Update download link
             const downloadLink = document.getElementById('download-link');
-            downloadLink.href = baseName + '_' + theme + '.pptx';
-            downloadLink.innerText = '📥 下载 ' + getThemeName(theme) + ' PPTX';
+            if (downloadLink) {
+                downloadLink.href = baseName + '_' + theme + '.pptx';
+                downloadLink.innerText = '📥 下载 ' + getThemeName(theme) + ' PPTX';
+            }
+            
+            updateSlideList();
         }
+        
         function getThemeName(theme) {
             return THEME_NAMES[theme] || '当前';
         }
-        // Initialize
-        const defaultInitTheme = '${inputFile.toLowerCase().includes('cyberpunk') ? 'cyberpunk' : inputFile.toLowerCase().includes('holodeck') ? 'holodeck' : inputFile.toLowerCase().includes('ghibli') ? 'ghibli' : 'spatial'}';
-        setTheme(defaultInitTheme);
+
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+                showSlide(Math.min(slideItems.length - 1, currentSlideIdx + 1));
+                e.preventDefault();
+            } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+                showSlide(Math.max(0, currentSlideIdx - 1));
+                e.preventDefault();
+            } else if (e.key === 'Home') {
+                showSlide(0);
+                e.preventDefault();
+            } else if (e.key === 'End') {
+                showSlide(slideItems.length - 1);
+                e.preventDefault();
+            }
+        });
+        
+        function fit() {
+            const stage = document.getElementById('stage');
+            if (!stage) return;
+            const sw = 1280, sh = 720;
+            const vw = window.innerWidth, vh = window.innerHeight;
+            const scale = Math.min(vw / sw, vh / sh);
+            stage.style.transform = 'scale(' + scale + ')';
+        }
+        
+        window.addEventListener('resize', fit);
+        window.addEventListener('load', () => {
+            fit();
+            const defaultInitTheme = '${inputFile.toLowerCase().includes('cyberpunk') ? 'cyberpunk' : inputFile.toLowerCase().includes('holodeck') ? 'holodeck' : inputFile.toLowerCase().includes('ghibli') ? 'ghibli' : 'spatial'}';
+            setTheme(defaultInitTheme);
+        });
     </script>
 `;
     } else {
@@ -1554,19 +1670,85 @@ ${Object.keys(THEMES).map(k => `        <button class="theme-btn" onclick="setTh
     <div class="toolbar">
         <span class="toolbar-title">当前主题: ${THEMES[themeMode] ? THEMES[themeMode].name : themeMode}</span>
         <span style="color: rgba(255,255,255,0.2); margin: 0 5px;">|</span>
+        <span class="toolbar-title">页码:</span>
+        <span id="slide-counter" class="toolbar-title" style="background: rgba(255,255,255,0.08); padding: 4px 10px; border-radius: 12px; font-family: monospace; color: #FFFFFF;">1 / 1</span>
+        <span style="color: rgba(255,255,255,0.2); margin: 0 5px;">|</span>
         <a href="${basePptxName}" class="theme-btn" style="background: #10B981; color: #FFFFFF; text-decoration: none; display: inline-flex; align-items: center; gap: 5px;" download>
             📥 下载 PPTX 文件
         </a>
     </div>
     <script>
         document.body.className = 'theme-${themeMode}';
-        const spatialContainer = document.querySelector('.theme-layout-spatial');
-        const cyberpunkContainer = document.querySelector('.theme-layout-cyberpunk');
-        const holodeckContainer = document.querySelector('.theme-layout-holodeck');
         
-        if (spatialContainer) spatialContainer.style.display = ('${themeMode}' === 'spatial' || ('${themeMode}' !== 'cyberpunk' && '${themeMode}' !== 'holodeck')) ? 'flex' : 'none';
-        if (cyberpunkContainer) cyberpunkContainer.style.display = ('${themeMode}' === 'cyberpunk') ? 'flex' : 'none';
-        if (holodeckContainer) holodeckContainer.style.display = ('${themeMode}' === 'holodeck') ? 'flex' : 'none';
+        let currentSlideIdx = 0;
+        let slideItems = [];
+        
+        function updateSlideList() {
+            const containers = Array.from(document.querySelectorAll('.slides-container'));
+            const activeContainer = containers.find(c => c.style.display !== 'none');
+            if (activeContainer) {
+                slideItems = Array.from(activeContainer.querySelectorAll('.slide-item'));
+            } else {
+                slideItems = Array.from(document.querySelectorAll('.slide-item'));
+            }
+            slideItems.forEach((el, i) => {
+                el.classList.toggle('active', i === currentSlideIdx);
+            });
+            updatePageCounter();
+        }
+
+        function showSlide(idx) {
+            if (idx < 0 || idx >= slideItems.length) return;
+            slideItems.forEach((el, i) => {
+                el.classList.toggle('active', i === idx);
+            });
+            currentSlideIdx = idx;
+            updatePageCounter();
+        }
+        
+        function updatePageCounter() {
+            const counterEl = document.getElementById('slide-counter');
+            if (counterEl && slideItems.length > 0) {
+                counterEl.innerText = (currentSlideIdx + 1) + ' / ' + slideItems.length;
+            }
+        }
+
+        // Toggle layout containers
+        const containers = Array.from(document.querySelectorAll('.slides-container'));
+        containers.forEach(c => {
+            c.style.display = c.classList.contains('theme-layout-${themeMode}') ? 'block' : 'none';
+        });
+        
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+                showSlide(Math.min(slideItems.length - 1, currentSlideIdx + 1));
+                e.preventDefault();
+            } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+                showSlide(Math.max(0, currentSlideIdx - 1));
+                e.preventDefault();
+            } else if (e.key === 'Home') {
+                showSlide(0);
+                e.preventDefault();
+            } else if (e.key === 'End') {
+                showSlide(slideItems.length - 1);
+                e.preventDefault();
+            }
+        });
+        
+        function fit() {
+            const stage = document.getElementById('stage');
+            if (!stage) return;
+            const sw = 1280, sh = 720;
+            const vw = window.innerWidth, vh = window.innerHeight;
+            const scale = Math.min(vw / sw, vh / sh);
+            stage.style.transform = 'scale(' + scale + ')';
+        }
+        
+        window.addEventListener('resize', fit);
+        window.addEventListener('load', () => {
+            fit();
+            updateSlideList();
+        });
     </script>
 `;
     }
@@ -1625,10 +1807,18 @@ function addPremiumCard(slide, x, y, w, h, theme, hasAccentBar = true) {
     slide.addShape('roundRect', {
         x: x, y: y, w: w, h: h,
         fill: { color: theme.cardBg },
-        line: { color: theme.cardBorder, width: 1.5 }
+        line: { color: theme.cardBorder, width: 1.5 },
+        shadow: {
+            type: 'outer',
+            color: '1E293B',
+            blur: 12,
+            offset: 4,
+            angle: 90,
+            opacity: 0.06
+        }
     });
     // For spatial theme (bg is 060E11), we do not add the thick accent top bar to align with the mockup
-    const isSpatial = (theme.bg === '060E11');
+    const isSpatial = (theme.bg === '060E11' || theme.bg === '060e11');
     if (hasAccentBar && !isSpatial) {
         slide.addShape('rect', {
             x: x, y: y, w: w, h: 0.08,
@@ -1996,6 +2186,10 @@ function generatePptxForTheme(themeKey, outFile) {
                         slide.addShape('oval', { x: cx2 - 0.3, y: cy2 + 0.2, w: 0.15, h: 0.15, fill: { color: 'FFFFFF', transparency: 100 }, line: { color: 'A78BFA', width: 1 } });
                         slide.addShape('oval', { x: cx2 + 0.15, y: cy2 + 0.2, w: 0.15, h: 0.15, fill: { color: 'FFFFFF', transparency: 100 }, line: { color: 'A78BFA', width: 1 } });
                     }
+                } else if (el.type === 'decoration') {
+                    const DmlTranslator = require('./svg_to_dml.js');
+                    const translator = new DmlTranslator(theme);
+                    translator.translateElement(slide, el, theme);
                 } else if (el.type === 'timeline') {
                     const numCards = el.content.length;
                     const gap = 0.25;
@@ -2523,30 +2717,250 @@ for (let i = 1; i < args.length; i++) {
     }
 }
 
-if (selectedTheme === "all") {
-    const promises = Object.keys(THEMES).map(themeKey => {
-        let themeOutFile = outputFile.replace(/\.pptx$/i, `_${themeKey}.pptx`);
-        if (themeOutFile === outputFile) {
-            themeOutFile = `${outputFile}_${themeKey}.pptx`;
+const inputDir = path.dirname(inputFile);
+const svgOutputDir = path.join(inputDir, 'svg_output');
+
+if (fs.existsSync(svgOutputDir)) {
+    console.log("🤖 Detected SVG-first workspace. Running Vendor ppt-master DrawingML compiler...");
+    let pptMasterPath = process.env.PPT_MASTER_PATH;
+    if (!pptMasterPath) {
+        const relativeSubmodulePath = path.join(__dirname, '../ppt-master');
+        const relativeSubmoduleCompiler = path.join(relativeSubmodulePath, 'skills/ppt-master/scripts/svg_to_pptx.py');
+        if (fs.existsSync(relativeSubmoduleCompiler)) {
+            pptMasterPath = relativeSubmodulePath;
+        } else {
+            pptMasterPath = '/mnt/g/Projects/AIGC/ppt-master';
         }
-        return generatePptxForTheme(themeKey, themeOutFile);
+    }
+    const pythonCompiler = path.join(pptMasterPath, 'skills/ppt-master/scripts/svg_to_pptx.py');
+    
+    if (fs.existsSync(pythonCompiler)) {
+        try {
+            // 1. Run PPT Master compiler to generate PPTX
+            const compileCmd = `python3 "${pythonCompiler}" "${inputDir}" -o "${outputFile}" -t fade`;
+            console.log(`🚀 Executing: ${compileCmd}`);
+            execSync(compileCmd, { stdio: 'inherit' });
+            
+            // 2. Automatically generate the inline SVG HTML preview
+            const htmlOutPath = outputFile.replace(/\.pptx$/i, '.html');
+            console.log(`🤖 Building responsive HTML preview from SVGs to: ${htmlOutPath}`);
+            
+            const files = fs.readdirSync(svgOutputDir)
+                .filter(f => f.endsWith('.svg'))
+                .sort();
+            
+            let slidesHtml = '';
+            files.forEach((file, idx) => {
+                const svgContent = fs.readFileSync(path.join(svgOutputDir, file), 'utf-8');
+                const cleanedSvg = svgContent.replace(/<\?xml[^>]*\?>/g, '').trim();
+                const activeClass = idx === 0 ? ' active' : '';
+                slidesHtml += `      <div class="slide-item${activeClass}" id="slide-${idx}">
+        ${cleanedSvg}
+      </div>\n`;
+            });
+            
+            const htmlContent = `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Custom SVG Presentation Preview</title>
+  <style>
+    body {
+      background-color: #08090d;
+      color: #e8eaed;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      width: 100vw;
+    }
+    .deck-shell {
+      position: fixed;
+      inset: 0;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+    }
+    .deck-stage {
+      width: 1280px;
+      height: 720px;
+      position: relative;
+      transform-origin: center center;
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.4);
+      background-color: #E0F7FA;
+      pointer-events: auto;
+    }
+    .slide-item {
+      position: absolute;
+      inset: 0;
+      display: none;
+      width: 100%;
+      height: 100%;
+    }
+    .slide-item.active {
+      display: block !important;
+    }
+    /* Floating Toolbar */
+    .toolbar {
+      position: fixed;
+      bottom: 25px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(30, 41, 59, 0.85);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 8px 24px;
+      border-radius: 30px;
+      display: flex;
+      gap: 15px;
+      align-items: center;
+      z-index: 1000;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.35);
+    }
+    .toolbar-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: #94A3B8;
+    }
+    .theme-btn {
+      border: none;
+      padding: 6px 16px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 13px;
+      transition: all 0.2s;
+      background: #10B981;
+      color: #FFFFFF;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+    @media print {
+      body { background: white !important; overflow: visible !important; display: block !important; min-height: auto !important; width: auto !important; }
+      .deck-shell { position: relative !important; inset: auto !important; display: block !important; pointer-events: auto !important; }
+      .deck-stage { transform: none !important; box-shadow: none !important; width: 1280px !important; height: 720px !important; position: relative !important; }
+      .slide-item { display: block !important; position: relative !important; width: 1280px !important; height: 720px !important; page-break-after: always !important; }
+      .toolbar { display: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="deck-shell">
+    <div class="deck-stage" id="stage">
+${slidesHtml}
+    </div>
+  </div>
+
+  <div class="toolbar">
+    <span class="toolbar-title">动态排版模式: 自由SVG生成</span>
+    <span style="color: rgba(255,255,255,0.2); margin: 0 5px;">|</span>
+    <span class="toolbar-title">页码:</span>
+    <span id="slide-counter" class="toolbar-title" style="background: rgba(255,255,255,0.08); padding: 4px 10px; border-radius: 12px; font-family: monospace; color: #FFFFFF;">1 / 1</span>
+    <span style="color: rgba(255,255,255,0.2); margin: 0 5px;">|</span>
+    <a href="${path.basename(outputFile)}" class="theme-btn">
+      📥 下载 Native DrawingML PPTX
+    </a>
+  </div>
+
+  <script>
+    let currentSlideIdx = 0;
+    const slideItems = Array.from(document.querySelectorAll('.slide-item'));
+    
+    function showSlide(idx) {
+      if (idx < 0 || idx >= slideItems.length) return;
+      slideItems.forEach((el, i) => {
+        el.classList.toggle('active', i === idx);
+      });
+      currentSlideIdx = idx;
+      updatePageCounter();
+    }
+    
+    function updatePageCounter() {
+      const counterEl = document.getElementById('slide-counter');
+      if (counterEl) {
+        counterEl.innerText = (currentSlideIdx + 1) + ' / ' + slideItems.length;
+      }
+    }
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+        showSlide(Math.min(slideItems.length - 1, currentSlideIdx + 1));
+        e.preventDefault();
+      } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+        showSlide(Math.max(0, currentSlideIdx - 1));
+        e.preventDefault();
+      } else if (e.key === 'Home') {
+        showSlide(0);
+        e.preventDefault();
+      } else if (e.key === 'End') {
+        showSlide(slideItems.length - 1);
+        e.preventDefault();
+      }
     });
-    Promise.all(promises).then(() => {
-        console.log(`✅ Generated all ${Object.keys(THEMES).length} theme versions!`);
-        generateHtmlPreview(slidesData, outputFile, "all");
-    }).catch(err => {
-        console.error("Error generating presentations:", err);
+
+    function fit() {
+      const stage = document.getElementById('stage');
+      if (!stage) return;
+      const sw = 1280, sh = 720;
+      const vw = window.innerWidth, vh = window.innerHeight;
+      const scale = Math.min(vw / sw, vh / sh);
+      stage.style.transform = 'scale(' + scale + ')';
+    }
+    
+    window.addEventListener('resize', fit);
+    window.addEventListener('load', () => {
+      fit();
+      updatePageCounter();
     });
-} else {
-    if (!THEMES[selectedTheme]) {
-        console.error(`Unknown theme: ${selectedTheme}. Available: ${Object.keys(THEMES).join(', ')}`);
+  </script>
+</body>
+</html>`;
+            fs.writeFileSync(htmlOutPath, htmlContent, 'utf-8');
+            console.log(`✅ Responsive HTML preview saved to ${htmlOutPath}`);
+            process.exit(0);
+        } catch (err) {
+            console.error("❌ Failed to compile SVG workspace using ppt-master:", err.message);
+            process.exit(1);
+        }
+    } else {
+        console.error(`❌ Vendor compiler not found at: ${pythonCompiler}`);
         process.exit(1);
     }
-    generatePptxForTheme(selectedTheme, outputFile).then(() => {
-        console.log(`✅ Generated theme: ${selectedTheme}`);
-        generateHtmlPreview(slidesData, outputFile, selectedTheme);
-    }).catch(err => {
-        console.error("Error generating presentation:", err);
-    });
+} else {
+    if (selectedTheme === "all") {
+        const promises = Object.keys(THEMES).map(themeKey => {
+            let themeOutFile = outputFile.replace(/\\.pptx$/i, `_\${themeKey}.pptx`);
+            if (themeOutFile === outputFile) {
+                themeOutFile = `\${outputFile}_\${themeKey}.pptx`;
+            }
+            return generatePptxForTheme(themeKey, themeOutFile);
+        });
+        Promise.all(promises).then(() => {
+            console.log(`\u2705 Generated all \${Object.keys(THEMES).length} theme versions!`);
+            generateHtmlPreview(slidesData, outputFile, "all");
+        }).catch(err => {
+            console.error("Error generating presentations:", err);
+        });
+    } else {
+        if (!THEMES[selectedTheme]) {
+            console.error(`Unknown theme: \${selectedTheme}. Available: \${Object.keys(THEMES).join(', ')}`);
+            process.exit(1);
+        }
+        generatePptxForTheme(selectedTheme, outputFile).then(() => {
+            console.log(`\u2705 Generated theme: \${selectedTheme}`);
+            generateHtmlPreview(slidesData, outputFile, selectedTheme);
+        }).catch(err => {
+            console.error("Error generating presentation:", err);
+        });
+    }
 }
 

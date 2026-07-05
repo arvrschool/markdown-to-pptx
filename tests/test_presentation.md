@@ -32,3 +32,27 @@ Advanced Robotics & World Modeling
 ![World Action Model Architecture](assets/model_architecture.jpg)
 
 <!-- notes: Emphasize that WAM runs at 60fps local inference to enable real-time reactive correction. -->
+
+---
+
+## Performance Statistics
+- **98.2%**: Accuracy in voxel-level 3D semantic mapping and active sensor fusion.
+- **12.5x**: Speedup in sim-to-real transfer with zero-shot domain randomization.
+- **-35%**: Collision rates in crowded dynamic obstacle environments.
+
+---
+
+## Simulation vs Physical Contrast
+- **Simulation Environment**: Photorealistic virtual domain, zero hardware risk, infinite parallel rollouts, perfect sensor measurements.
+- **Physical Real World**: Noisy real-world sensors, mechanical wear and lag, high collision risks, limited execution speed.
+
+---
+
+## Latency Benchmark
+
+<!-- chart: { "type": "bar", "options": { "showLegend": true, "colors": ["00F0FF", "BC39FA"] } } -->
+| Framework | Local Inference (ms) | Remote Cloud API (ms) |
+| :--- | :---: | :---: |
+| Baseline VLA | 250 | 850 |
+| WAM Core | 16 | 450 |
+| WAM++ Optimized | 8 | 380 |

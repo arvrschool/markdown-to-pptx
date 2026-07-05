@@ -4,28 +4,25 @@
 
 本仓库提供了一个双引擎转换器，旨在生成专业、演示就绪的幻灯片：
 1. **Python 引擎 (`python-pptx`)**：非常适合严格遵循自定义企业母版模板的场景。
-2. **JS Web 引擎 (Node.js 中的 `pptxgenjs`)**：适用于高密度内容，具有**动态字体缩放**功能以防止文本溢出，并配有**自动组件布局系统**。
+2. **JS Web 引擎与 AIGC 动态视觉合成 (SVG 优先与 DrawingML 编译器)**：我们提供的高级设计引擎。它能提取任何设计效果图中的视觉 DNA，并动态合成弹性布局（通过坐标 reflow 自动计算并防止文本溢出），最后通过 `ppt-master` Submodule 子模块将 SVG 元素编译为 **原生、在 PowerPoint 中完全可编辑的 DrawingML 形状**。
 
-它还完全兼容 **Google Antigravity 自定义技能 (Custom Skill)**，使您的 AI 编程助手能直接在工作区聊天中生成幻灯片。
+---
 
-### 🎨 视觉主题与版式预览
+## 🎨 视觉主题与版式预览
 
-#### 1. 概念设计效果图 vs. 实际生成的 PPT 与 HTML 预览效果对比：
+### 1. 概念设计效果图 vs. 实际生成的 PPT 与 HTML 预览效果对比：
 *   **设计概念效果图 (AIGC 生成)**：
     ![设计概念效果图](assets/pptx_html_actual_preview.jpg)
-*   **实际生成的PPT和HTML效果图**：
+*   **实际生成的 PPT 和 HTML 效果图**：
     ![实际渲染效果 - 图1](assets/spatial_ai_preview_v2_actual_1.jpg)
     ![实际渲染效果 - 图2](assets/spatial_ai_preview_v2_actual_2.jpg)
 
-#### 2. 其他预置全局主题效果（极简浅色、科技深色、优雅沙滩、清新森林等）：
-![预置全局主题效果](assets/themes_preview.jpg)
-
-#### 3. AIGC 动态主题演示 (概念底图 → 生成效果)：
-| | **赛博朋克** | **吉卜力** |
+### 2. AIGC 动态主题演示 (主题：赛博朋克 HUD 与吉卜力水彩)：
+| | **赛博朋克 HUD** | **吉卜力水彩风** |
 |:---|:---:|:---:|
 | **概念底图** | ![赛博朋克概念图](assets/cyberpunk_bg.jpg) | ![吉卜力概念图](assets/ghibli_template.jpg) |
 | **生成效果** | ![赛博朋克演示](assets/cyberpunk_demo.gif) | ![吉卜力演示](assets/ghibli_demo.gif) |
-| *风格* | 高密度不对称霓虹 HUD 卡片 | 手绘水彩羊皮纸卡片·草地蓝天背景 |
+| *风格* | 不对称霓虹发光科技 HUD 卡片 | 蓝天绿地背景配上手绘质感羊皮纸卡片 |
 
 ---
 
@@ -36,49 +33,54 @@
 ```mermaid
 graph LR
     A["原始文献 / 笔记"] -->|llm-wiki 整理| B["个人 Wiki (Markdown)"]
-    B -->|markdown-to-pptx 提炼| C["PPT 专用 Markdown (幻灯片大纲)"]
-    C -->|转换引擎编译| D["原生 PowerPoint (.pptx)"]
+    B -->|markdown-to-pptx 提炼| C["PPT 专用 Markdown (大纲)"]
+    C -->|SVG-First 工作流编译| D["原生 DrawingML PPTX (.pptx)"]
 ```
 
-1. **信息整理与结构化 (使用 `llm-wiki`)**：
-   首先，原始学术论文、技术文档或学习笔记通过 [llm-wiki](https://github.com/arvrschool/Personal-Wiki) 技能进行处理，提取并生成结构化的 Markdown 知识库页面或四级认知维度的 QA 数据库。
-2. **幻灯片大纲提炼**：
-   `markdown-to-pptx` 技能作为工作流的下游管道。它读取高密度的 Wiki 文档，过滤掉 Obsidian 的私有扩展语法（如双链、自定义 Callout 等），并提炼出契合 PPT 演示逻辑的精炼版 Markdown 大纲（包含 `---` 分页符、H2 标题，以及能触发特定卡片布局的列表语法）。
-3. **PPTX 编译输出**：
-   使用 Python 引擎或 JS 引擎将提炼后的 PPT 专用大纲一键转换为最终的原生 `.pptx` 演示文稿。
+1. **信息整理与结构化 (使用 `llm-wiki`)**：首先将原始文献或笔记整理为结构化 Wiki 页面。
+2. **幻灯片大纲提炼**：`markdown-to-pptx` 过滤清洗 Obsidian 自定义语法，并提炼为以 `---` 分页的幻灯片大纲。
+3. **PPT 编译生成**：使用 JS 和 Python 双端工具链编译为原生可编辑的 PowerPoint 文件。
 
 ---
 
 ## 🌟 核心特性
 
-* **双引擎灵活性**：对于标准模板使用 Python，对于高级 Web 风格的卡片布局使用 Node.js。
-* **动态字体缩放 (JS 引擎)**：自动检测文本量，并在文本密度较高时自动缩小字体以适应文本框。
-* **基于组件的幻灯片布局**：根据 Markdown 结构自动切换布局形式：
-  - **Centered Breathe (居中呼吸)**：为关键名言或单一结论提供大字号居中卡片布局。
-  - **Horizontal Grid Cards (水平栅格卡片)**：将无序列表水平排列为精美的微立体边框卡片。
-  - **Timeline/Sequence (时间轴/步骤链)**：将带序号的步骤渲染为带节点的时序链条。
-  - **Asymmetric Split (非对称双栏)**：将幻灯片拆分为文本卡片与图片卡片，预留 5% 安全边距防溢出。
-* **多主题支持 (JS 引擎)**：内置 10 种精心调配的色彩搭配（Minimalist Light、Cyber Dark、Cyberpunk、Warm Editorial、Aurora Purple、Sage Forest、Deep Ocean、Spatial AI、Holodeck、Ghibli 吉卜力动漫）。
-* **演讲者备注**：提取 Markdown 中的 `<!-- notes: ... -->` 注释直接写入 PowerPoint 备注栏。
-* **图片自动适配**：解析 Markdown 图片语法 (`![图注](路径)`) 并进行动态重心对齐。
+* **双引擎灵活性**：对于标准模板汇报使用 Python 引擎，对于 AIGC 高度定制视觉的幻灯片使用 Node.js + Python DrawingML 引擎。
+* **AIGC 动态视觉合成 (SVG-First)**：
+  * **视觉 DNA 提取 (`extract_visual_dna.js`)**：分析示例效果图，提取主色调、字体、圆角半径和装饰性几何体规则。
+  * **渐变底图生成 (`generate_gradient.js`)**：根据提取的色彩规则，纯净渲染背景渐变图，避免直接拉伸有噪点的效果图背景。
+  * **DrawingML 矢量编译 (`svg_to_dml.js` / `ppt-master` 子模块)**：将布局 SVG（矩形、线条、文本框、路径）直接编译成可编辑的 Office 形状。文本框在 MS PowerPoint 中可双击直接编辑文字。
+* **排版去雷同蓝图关卡 (Anti-Duplication Blueprint Gate)**：
+  * 在 Step 4 生成坐标前，强制要求 AI 必须先声明并输出**「全局布局蓝图去重自检表」**。
+  * **重复次数限制**：整套 PPT 中，任何排版骨架最多出现 2 次且绝对不能连续出现。
+  * **重合碰撞校验**：若某页的 Bounds 与历史页面重合度超过 85%，强制要求 AI 修改当前页的物理骨架，杜绝模版化雷同。
+* **响应式布局组件**：自动根据文本字数与内容特征拟合排版：
+  * **Centered Breathe (居中呼吸)**：字数极少时大字号居中展示，充满空气感。
+  * **Horizontal Grid (水平栅格)**：列表数据转化为 2-3 列并排卡片。
+  * **2x2 Matrix (四宫格)**：四个要点转化为田字形分布，自带语义图标与明细卡。
+  * **Timeline (时序时间轴)**：有序列表转换为带连接线的横向步骤链。
+  * **Asymmetric Columns (非对称双栏)**：图文混排时智能分配左右占比，防止文字爆版重叠。
 
 ---
 
 ## 🚀 安装与设置
 
-### 1. Python 引擎依赖
-请确保已安装 Python 3，然后安装所需的 `python-pptx` 库：
+### 1. 初始化 Submodule 子模块 (动态 JS 引擎必须)
+为了将 SVG 编译为原生 DrawingML 形状，本项目依赖了 `ppt-master` 编译工具。请在安装时拉取子模块：
 ```bash
-pip install python-pptx
+git submodule update --init --recursive --depth 1
 ```
 
-### 2. JS Web 引擎依赖
-进入 `scripts` 目录并安装 Node.js 依赖包：
-```bash
-cd scripts
-npm install
-```
-*(需要 Node.js v14+)*
+### 2. 依赖项安装
+* **Python 引擎**：安装 `python-pptx`：
+  ```bash
+  pip install python-pptx
+  ```
+* **JS 引擎**：进入 `scripts` 目录并安装依赖包：
+  ```bash
+  cd scripts
+  npm install
+  ```
 
 ---
 
@@ -86,118 +88,44 @@ npm install
 
 ### 选项 A：Python 引擎（模板驱动）
 适合需要与现有企业 `.pptx` 模板严格保持对齐的汇报演示。
-
-**标准转换：**
-```bash
-python scripts/md2pptx.py input.md -o output.pptx
-```
-
-**应用企业幻灯片母版模板：**
 ```bash
 python scripts/md2pptx.py input.md -t corporate_template.pptx -o output.pptx
 ```
 
----
+### 选项 B：JS Web 引擎（动态卡片与 DrawingML 编译）
+适合学术论文解读、技术分享以及复杂的不对称视觉排版。
 
-### 选项 B：JS Web 引擎（动态卡片与主题）
-适合学术论文解读、技术分享以及复杂的布局展示。
-
-**标准转换（一次性生成所有 10 种主题，附带 HTML 预览切换器）：**
-```bash
-node scripts/md2pptx_web.js input.md -o output.pptx -t all
-```
-
-**应用特定单主题转换：**
+**标准转换 (一键生成 PPTX 以及 responsive HTML 预览 switcher):**
 ```bash
 node scripts/md2pptx_web.js input.md -o output.pptx -t <theme>
 ```
-*可选主题：* `light`, `dark`, `warm`, `aurora`, `forest`, `ocean`, `spatial`, `cyberpunk`, `holodeck`, `ghibli`（吉卜力水彩风）。
+*可选预置主题：* `light`, `dark`, `warm`, `aurora`, `forest`, `ocean`, `spatial`, `cyberpunk`, `holodeck`, `ghibli`。
+
+**使用自定义 AIGC 效果图提炼：**
+1. 提取视觉 DNA：
+   ```bash
+   node scripts/extract_visual_dna.js design_mockup.png <theme_name> ./
+   ```
+2. 根据 DNA 生成渐变背景图：
+   ```bash
+   node scripts/generate_gradient.js <theme_name> ./ ./assets/
+   ```
+3. 运行转换器：
+   ```bash
+   node scripts/md2pptx_web.js input.md -o output.pptx -t <theme_name>
+   ```
 
 ---
 
-## 🔄 演示文稿生成范式演进 (Paradigm Shift)
-
-传统的 Markdown 转 PPTX 工具与模板主要依赖于**“静态母版继承模式”**。本项目引入了专为 AI 智能体（AI Agent）时代设计的**“动态视觉合成模式”**：
-
-| 特性维度 | 静态母版继承模式 (Python 引擎) | 动态视觉合成模式 (JS Web 引擎) |
-| :--- | :--- | :--- |
-| **设计来源** | 现有的静态 `.pptx` 模板文件 (Slide Masters)。 | **AI 绘图工具（如 Midjourney）生成的 PPT 设计效果图（图片）。** |
-| **转换机制** | 静态框格文本填充（硬性覆盖坐标）。 | **AI 提取设计图中的视觉尺寸与色值 ➔ 代码级弹性复刻编译。** |
-| **布局弹性** | **硬性绑定**。字数超出时排版容易发生重叠或溢出。 | **动态自适应**。根据字数、卡片数和图片自适应切换最佳排版组件。 |
-| **适用场景** | 严格规范、对版式有死板要求的企业汇报。 | 学术论文解读、技术分享大纲、高弹性 AI Agent 自动生成流。 |
-
-通过把设计模板的媒介从“静态 PPT 文件”升级为“**AIGC 概念图提取 ➔ 弹性代码渲染**”，我们彻底解决了 AI 自动生成 PPT 时的“字数爆版”痛点，赋予了幻灯片高度弹性的排版生命力。
-
-### 📐 案例研究：AIGC 矢量分层生成 (主题: `spatial`)
-
-相较于直接在卡片中贴入低分辨率、有环境噪点和边框的位图截图，动态视觉合成模式通过**“在 AI 生成的高清科技感背景图上，动态叠加纯净的矢量资产”**来编译生成幻灯片：
-
-*   **1. AI 生成的高清背景图 (`spatial_bg.jpg`)**：
-    ![Spatial Background](assets/spatial_bg.jpg)
-*   **2. 复刻重建的纯净 SVG 矢量图标 (带有精致的霓虹发光特效)**：
-    *   **Card 1 (具身智能机械臂)**：`assets/spatial_icon_1.svg`
-    *   **Card 2 (3D 空间投射立方体)**：`assets/spatial_icon_2.svg`
-    *   **Card 3 (自动驾驶路径雷达)**：`assets/spatial_icon_3.svg`
-    *   **Card 4 (智能工厂传送带与工人)**：`assets/spatial_icon_4.svg`
-
-这种分层叠加编译，保证了幻灯片在 PowerPoint 中具有 **100% 完美的透明度融合**、**无边缘溢出/无色差边框**，且插图具有**无限缩放不失真**的极致超清矢量质感。
-
----
-
-## 📐 响应式布局组件系统
-
-JS Web 引擎会分析每张幻灯片的文本密度与元素结构，自适应应用以下布局：
+## 📐 响应式布局规范
 
 | 布局组件 | 触发条件 | 视觉样式 |
 | :--- | :--- | :--- |
-| **Centered Breathe (居中呼吸)** | 字数 < 120 字，无图，非卡片。 | 居中单卡片，字号提升 4pt，高留白。 |
-| **Horizontal Grid Cards (水平栅格)** | 2-3 项，格式为 `- **标题**: 内容` | 动态水平栅格卡片，细边框与主题色页眉。 |
-| **2x2 Matrix Grid (2x2 矩阵卡片)** | 恰好 4 项，格式为 `- **标题**: 内容` | 2x2 矩阵卡片布局。卡片左侧展示自适应语义图标；右侧展示标题与正文。 |
-| **Timeline/Sequence (时间轴/步骤)** | 3-5 项以数字开头（如 `1. **步骤**`） | 带虚线连接的横向步骤链，配有彩色标志点。 |
-| **Asymmetric Split (非对称双栏)** | 标准文本 + 至少包含一张图片。 | 左侧文本卡片，右侧垂直居中对齐图片卡片。 |
-
----
-
-## 📝 Markdown 目标格式规范与手动微调
-
-本规范既作为 AI 自动生成器（如 `llm-wiki`）的目标编译格式规范，也用于指导用户在生成 PPT 前对手动修改进行微调。
-
-请按照以下结构组织您的 Markdown 文件以获得最佳的转换排版效果：
-
-```markdown
-# WAM4D：空间寄存器标记
-前沿世界动作模型
-Google DeepMind 团队
-
----
-
-## 居中呼吸布局示例
-这是一个单独的核心观点或引用。由于字数极少，它会自动触发“居中呼吸”布局，呈现出较大的字号与宽阔的排版呼吸感。
-
----
-
-## 技术亮点与成就
-- **多任务超越**：在 12 项空间几何测试中超越人类专家基准。
-- **3D 空间涌现**：无需 3D 标签，自适应学习并生成一致的立体结构。
-- **零样本迁移**：直接适配此前从未见过的全新物理仿真环境。
-
----
-
-## 时间轴步骤布局
-1. **模型定义**：构建 4D 空间寄存器标记及三维位置编码。
-2. **时空融合交互**：在自注意力机制中融合历史与未来上下文信息。
-3. **解码重建投影**：解码结果并投影回输出空间，完成 4D 动作状态输出。
-
----
-
-## 架构概览
-- **双通道融合**：文本信息被解析在左侧卡片中展示。
-- **视觉重心补偿**：图片在右侧自适应对齐，下方渲染动态图注面板。
-
-![模型结构与时空对齐流向图](scripts/images/diagram.png)
-
-<!-- notes: 汇报时请重点强调空间寄存器标记是按 30Hz 频率实时更新的。 -->
-```
+| **Centered Breathe** | 字数 < 120 字，无图。 | 单个居中卡片，字号增加 4pt，高留白率。 |
+| **Horizontal Grid Cards** | 2-3 项无序列表。 | 水平并排的细边框圆角卡片。 |
+| **2x2 Matrix Grid** | 恰好 4 项无序列表。 | 田字形排列卡片，左侧展示语义化图标。 |
+| **Timeline/Sequence** | 3-5 项以数字开头的步骤。 | 带有虚线连接的横向步骤时序链。 |
+| **Asymmetric Split** | 标准文本 + 至少一张图片。 | 非对称排版，左文本卡片，右图片卡片。 |
 
 ---
 
@@ -213,7 +141,7 @@ Google DeepMind 团队
 2. **项目级安装**：
    直接放置在您项目根目录下的 `.agents/skills/markdown-to-pptx` 目录中。
 
-加载完成后，Antigravity 助手在收到 PPT 生成指令时，会自动调用本技能并通过交互式模态框 (`ask_question`) 让您选择引擎、丰富度及偏好主题。
+加载完成后，Antigravity 助手在收到 PPT 生成指令时，会自动调用本技能并通过交互式模态框确认您的引擎、丰富度及偏好主题。
 
 ---
 

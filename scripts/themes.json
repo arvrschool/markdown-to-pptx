@@ -78,5 +78,69 @@
     "accentColor": "D9A441", "formulaColor": "B45309", "dividerColor": "C9D9C0",
     "fontFace": "Georgia", "fontFamily": "\"Georgia\", \"Segoe UI\", serif",
     "isDark": false, "bgImage": true
+  },
+  "ne70s": {
+    "name": "数智蓝商务",
+    "bg": "F5F6F7", "cardBg": "FFFFFF", "cardBorder": "E2E8F0",
+    "titleColor": "1D2C4E", "textColor": "334155",
+    "accentColor": "1C66BC", "formulaColor": "2F71C1", "dividerColor": "E2E8F0",
+    "fontFace": "Segoe UI", "fontFamily": "\"Segoe UI\", -apple-system, sans-serif",
+    "isDark": false, "bgImage": true
+  },
+  "jryw4": {
+    "name": "教育渐变青绿",
+    "bg": "E0F7FA", "cardBg": "FFFFFF", "cardBorder": "80CBC4",
+    "titleColor": "1A237E", "textColor": "374151",
+    "accentColor": "00BFA5", "formulaColor": "4FC3F7", "dividerColor": "80CBC4",
+    "fontFace": "Nunito Bold", "fontFamily": "\"Nunito Regular\", \"Microsoft YaHei\", sans-serif",
+    "isDark": false, "bgImage": true
+  },
+  "78khc": {
+    "name": "极简板岩灰",
+    "bg": "F1F2F2", "cardBg": "FFFFFF", "cardBorder": "D1D5DB",
+    "titleColor": "2D425E", "textColor": "4B5563",
+    "accentColor": "2D425E", "formulaColor": "4A5E77", "dividerColor": "D1D5DB",
+    "fontFace": "Georgia", "fontFamily": "Georgia, serif",
+    "isDark": false, "bgImage": true
+  },
+  "nnnhk": {
+    "name": "温暖橄榄绿",
+    "bg": "EFE8D4", "cardBg": "F6F3EB", "cardBorder": "D2C9B4",
+    "titleColor": "1587B8", "textColor": "4A3F28",
+    "accentColor": "69994F", "formulaColor": "93A85A", "dividerColor": "D2C9B4",
+    "fontFace": "Georgia", "fontFamily": "Georgia, serif",
+    "isDark": false, "bgImage": true
+  },
+  "aea2z": {
+    "name": "赛博紫曜蓝",
+    "bg": "091227", "cardBg": "141935", "cardBorder": "212850",
+    "titleColor": "00F0FF", "textColor": "D1D5DB",
+    "accentColor": "5D2C9A", "formulaColor": "70569E", "dividerColor": "212850",
+    "fontFace": "Cascadia Mono", "fontFamily": "\"Cascadia Mono\", monospace",
+    "isDark": true, "bgImage": true
+  },
+  "m3ecj": {
+    "name": "雅致酒红奶油白",
+    "bg": "F6F0E9", "cardBg": "FFFFFF", "cardBorder": "E8E1D5",
+    "titleColor": "5B1923", "textColor": "4A3C3E",
+    "accentColor": "5B1923", "formulaColor": "896666", "dividerColor": "E8E1D5",
+    "fontFace": "Georgia", "fontFamily": "Georgia, serif",
+    "isDark": false, "bgImage": true
+  },
+  "lg78g": {
+    "name": "宁静鼠尾草绿",
+    "bg": "F5F8F8", "cardBg": "FFFFFF", "cardBorder": "D9E2E2",
+    "titleColor": "06625A", "textColor": "3F5250",
+    "accentColor": "0D94A1", "formulaColor": "619895", "dividerColor": "D9E2E2",
+    "fontFace": "Segoe UI", "fontFamily": "\"Segoe UI\", sans-serif",
+    "isDark": false, "bgImage": true
+  },
+  "medical": {
+    "name": "智慧医疗科技",
+    "bg": "0A1628", "cardBg": "0F2240", "cardBorder": "1E4A6E",
+    "titleColor": "E8F4FF", "textColor": "A8C4D8",
+    "accentColor": "00BFA5", "formulaColor": "38B2FF", "dividerColor": "1E4A6E",
+    "fontFace": "Microsoft YaHei", "fontFamily": "\"Microsoft YaHei\", \"PingFang SC\", sans-serif",
+    "isDark": true, "bgImage": false
   }
 }

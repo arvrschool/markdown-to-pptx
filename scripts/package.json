@@ -10,7 +10,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "pptxgenjs": "^4.0.1",
-    "jszip": "^3.10.1"
+    "jszip": "^3.10.1",
+    "pptxgenjs": "^4.0.1"
+  },
+  "devDependencies": {
+    "puppeteer-core": "^25.3.0"
   }
 }
