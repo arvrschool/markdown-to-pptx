@@ -70,11 +70,25 @@ async function main() {
         await page.goto(fileUrl, { waitUntil: 'networkidle2' });
 
         // Query all slide frames
-        const frames = await page.$$('.slide-frame');
+        let frames = await page.$$('.slide-frame');
+        if (frames.length === 0) {
+            frames = await page.$$('.slide-item');
+        }
         console.log(`📸 Found ${frames.length} slides to capture.`);
 
         for (let i = 0; i < frames.length; i++) {
             const outPath = path.join(outputDir, `slide_${i}.png`);
+            await page.evaluate((idx) => {
+                if (typeof showSlide === 'function') {
+                    showSlide(idx);
+                } else {
+                    const items = document.querySelectorAll('.slide-item');
+                    items.forEach((item, j) => {
+                        item.classList.toggle('active', j === idx);
+                    });
+                }
+            }, i);
+            await new Promise(r => setTimeout(r, 150));
             await frames[i].screenshot({ path: outPath });
             console.log(`   [Slide ${i}] -> ${outPath}`);
         }
